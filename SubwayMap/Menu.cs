@@ -14,13 +14,21 @@ namespace SubwayMap
                 /*[3]*/"Remove Station",
                 /*[4]*/"Remove Link",
                 /*[5]*/"Print the Graph",
-                /*[6]*/"Clear Menu",
-                /*[7]*/"Exit",
+                /*[6]*/"Find the articulation points",
+                /*[7]*/"Test1",
+                /*[8]*/"Test2",
+                /*[9]*/"Test3",
+                /*[10]*/"Clear Graph",
+                /*[11]*/"Exit",
             };
         string selection;
         int index = 0;
-
-        public void ShowMenu(SubwayMap<char> map)
+        SubwayMap<char> map;
+        public Menu(SubwayMap<char> map)
+        {
+            this.map = map;
+        }
+        public void ShowMenu()
         {
             while (true)
             {
@@ -130,8 +138,20 @@ namespace SubwayMap
                     map.PrintGraph();
                     wait();
                     break;
-                case "Clear Menu":
-                    Console.WriteLine("Selected the sixth option");
+                case "Find the articulation points":
+                    map.AP();
+                    break;
+                case "Test1":
+                    Test1(map);
+                    break;
+                case "Test2":
+                    Test2(map);
+                    break;
+                case "Test3":
+                    Test3(map);
+                    break;
+                case "Clear Graph":
+                    this.map = new SubwayMap<char>();
                     break;
                 case "Exit":
                     Environment.Exit(1);
@@ -210,5 +230,53 @@ namespace SubwayMap
             }
             return false;
         }
+
+        public void Test1(SubwayMap<char> map)
+        {
+            map.InsertStation('A');
+            map.InsertStation('B');
+            map.InsertStation('C');
+            map.InsertStation('D');
+            map.InsertStation('E');
+            map.InsertLink('A', 'B', "red");
+            map.InsertLink('B', 'C', "red");
+            map.InsertLink('C', 'D', "red");
+            map.InsertLink('D', 'E', "red");
+            Console.WriteLine("\nThe graph is populated with Test 1 sample\n\n");
+            map.PrintGraph();
+        }
+
+        public void Test2(SubwayMap<char> map)
+        {
+            map.InsertStation('A');
+            map.InsertStation('B');
+            map.InsertStation('C');
+            map.InsertStation('D');
+            map.InsertLink('A', 'B', "red");
+            map.InsertLink('B', 'C', "red");
+            map.InsertLink('C', 'D', "red");
+
+            Console.WriteLine("\nThe graph is populated with Test 2 sample\n\n");
+            map.PrintGraph();
+        }
+        public void Test3(SubwayMap<char> map)
+        {
+            map.InsertStation('A');
+            map.InsertStation('B');
+            map.InsertStation('C');
+            map.InsertStation('D');
+            map.InsertStation('E');
+            map.InsertStation('F');
+            map.InsertLink('A', 'B', "red");
+            map.InsertLink('B', 'C', "red");
+            map.InsertLink('C', 'D', "white");
+            map.InsertLink('C', 'E', "white");
+            map.InsertLink('D', 'F', "white");
+            map.InsertLink('E', 'F', "white");
+
+            Console.WriteLine("\nThe graph is populated with Test 3 sample\n\n");
+            map.PrintGraph();
+        }
+
     }
 }

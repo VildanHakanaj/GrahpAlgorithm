@@ -12,8 +12,8 @@ namespace SubwayMap
         {
             Console.BackgroundColor = ConsoleColor.White;
             SubwayMap<char> map = new SubwayMap<char>();
-            Menu menu = new Menu();
-            menu.ShowMenu(map);
+            Menu menu = new Menu(map);
+            menu.ShowMenu();
         }
 
 
