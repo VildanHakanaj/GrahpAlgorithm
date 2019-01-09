@@ -137,41 +137,39 @@ namespace SubwayMap
             visited[u] = true;
 
             // Initialize discovery time and low value 
-            disc[u] = low[u] = ++time;
+            disc[u] = low[u] = time++;
 
             // Go through all vertices aadjacent to this 
-            for (int i = 0; i <= Vertecies.Count; i++)
+            for (int i = 0; i < Vertecies[u].Edges.Count; i++)
             {
-                int v = u + 1;  // v is current adjacent of u 
-                if (v < Vertecies.Count)
+                int v = FindVertex(Vertecies[u].Edges[i].AdjStation.Name);  // v is current adjacent of u 
+                                                                            // If v is not visited yet, then make it a child of in DFS tree and recur for it 
+                if (!visited[v])
                 {
-                    // If v is not visited yet, then make it a child of u 
-                    // in DFS tree and recur for it 
-                    if (!visited[v])
-                    {
-                        children++;
-                        parent[v] = u;
-                        APUtil(v, visited, disc, low, parent, ap);
+                    children++;
+                    parent[v] = u;
+                    APUtil(v, visited, disc, low, parent, ap);
 
-                        // Check if the subtree rooted with v has a connection to 
-                        // one of the ancestors of u 
-                        low[u] = Math.Min(low[u], low[v]);
+                    // Check if the subtree rooted with v has a connection to 
+                    // one of the ancestors of u 
+                    low[u] = Math.Min(low[u], low[v]);
 
-                        // u is an articulation point in following cases 
+                    // u is an articulation point in following cases 
 
-                        // (1) u is root of DFS tree and has two or more chilren. 
-                        if (parent[u] == NIL && children > 1)
-                            ap[u] = true;
+                    // (1) u is root of DFS tree and has two or more chilren. 
+                    if (parent[u] == NIL && children > 1)
+                        ap[u] = true;
 
-                        // (2) If u is not root and low value of one of its child 
-                        // is more than discovery value of u. 
-                        if (parent[u] != NIL && low[v] >= disc[u])
-                            ap[u] = true;
-                    }
+                    // (2) If u is not root and low value of one of its child 
+                    // is more than discovery value of u. 
+                    if (parent[u] != NIL && low[v] > disc[u])
+                        ap[u] = true;
                 }
                 // Update low value of u for parent function calls. 
                 else if (v != parent[u])
-                    low[u] = Math.Min(low[u], disc[v - 1]);
+                {
+                    low[u] = Math.Min(low[u], disc[v]);
+                }
             }
         }
 
@@ -199,20 +197,19 @@ namespace SubwayMap
                 ap[i] = false;
             }
 
-            // Call the recursive helper function to find articulation 
-            // points in DFS tree rooted with vertex 'i' 
+            //Call the recursive helper function to find articulation
+            // points in DFS tree rooted with vertex 'i'
             for (int i = 0; i < size; i++)
                 if (visited[i] == false)
                 {
                     APUtil(i, visited, disc, low, parent, ap);
                 }
-
             // Now ap[] contains articulation points, print them 
             Console.WriteLine();
             for (int i = 0; i < size; i++)
             {
-                if (ap[i] == true)
-                { 
+                if (ap[i])
+                {
                     Console.WriteLine(Vertecies[i].Name + " Is an articulation Point");
                 }
             }

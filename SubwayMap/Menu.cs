@@ -18,6 +18,8 @@ namespace SubwayMap
                 /*[7]*/"Test1",
                 /*[8]*/"Test2",
                 /*[9]*/"Test3",
+                /*[9]*/"Test4",
+                /*[9]*/"Test5",
                 /*[10]*/"Clear Graph",
                 /*[11]*/"Exit",
             };
@@ -150,6 +152,12 @@ namespace SubwayMap
                 case "Test3":
                     Test3(map);
                     break;
+                case "Test4":
+                    Test4(map);
+                    break;
+                case "Test5":
+                    Test5(map);
+                    break;
                 case "Clear Graph":
                     this.map = new SubwayMap<char>();
                     break;
@@ -243,6 +251,37 @@ namespace SubwayMap
             map.InsertLink('C', 'D', "red");
             map.InsertLink('D', 'E', "red");
             Console.WriteLine("\nThe graph is populated with Test 1 sample\n\n");
+            map.PrintGraph();
+        }
+
+        public void Test4(SubwayMap<char> map)
+        {
+            map.InsertStation('A');
+            map.InsertStation('B');
+            map.InsertStation('C');
+            map.InsertStation('D');
+            map.InsertLink('A', 'B', "red");
+            map.InsertLink('A', 'C', "red");
+            map.InsertLink('B', 'C', "red");
+            map.InsertLink('B', 'D', "red");
+            Console.WriteLine("\nThe graph is populated with Test 4 sample\n\n");
+            map.PrintGraph();
+        }
+
+        public void Test5(SubwayMap<char> map)
+        {
+            map.InsertStation('A');
+            map.InsertStation('B');
+            map.InsertStation('C');
+            map.InsertStation('D');
+            map.InsertStation('E');
+            map.InsertStation('F');
+            map.InsertLink('A', 'B', "red");
+            map.InsertLink('B', 'C', "red");
+            map.InsertLink('C', 'D', "red");
+            map.InsertLink('C', 'E', "red");
+            map.InsertLink('D', 'F', "red");
+            Console.WriteLine("\nThe graph is populated with Test 5 sample\n\n");
             map.PrintGraph();
         }
 
