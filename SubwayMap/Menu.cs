@@ -275,12 +275,11 @@ namespace SubwayMap
             map.InsertStation('C');
             map.InsertStation('D');
             map.InsertStation('E');
-            map.InsertStation('F');
             map.InsertLink('A', 'B', "red");
             map.InsertLink('B', 'C', "red");
             map.InsertLink('C', 'D', "red");
             map.InsertLink('C', 'E', "red");
-            map.InsertLink('D', 'F', "red");
+            map.InsertLink('D', 'E', "red");
             Console.WriteLine("\nThe graph is populated with Test 5 sample\n\n");
             map.PrintGraph();
         }
