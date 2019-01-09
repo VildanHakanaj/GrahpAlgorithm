@@ -43,7 +43,7 @@ namespace SubwayMap
             for (int i = 0; i < Edges.Count; i++)
             {
                 Edge<T> edge = Edges[i];
-                if (edge.Colour.Equals(Colour) && edge.StationName.Equals(StationName))
+                if (edge.Colour.Equals(Colour) && edge.AdjStation.Equals(StationName))
                 {
                     return i;
                 }

@@ -10,10 +10,9 @@ namespace SubwayMap
     {
         static void Main(string[] args)
         {
-
+            Console.BackgroundColor = ConsoleColor.White;
             SubwayMap<char> map = new SubwayMap<char>();
             Menu menu = new Menu();
-
             menu.ShowMenu(map);
         }
 

@@ -21,7 +21,7 @@
 //    //---------------------------------------------------------------------------------------------
 
 //    public class Vertex<T>
-//    {             
+//    {
 //        public T Name { get; set; }              // Vertex name
 //        public bool Visited { get; set; }
 //        public List<Edge<T>> E { get; set; }     // List of adjacency vertices
@@ -114,7 +114,7 @@
 //                {
 //                    for (k = 0; k < V[j].E.Count; k++)
 //                        if (V[j].E[k].AdjVertex.Name.Equals(name))   // Incident edge
-//                        {  
+//                        {
 //                            V[j].E.RemoveAt(k);
 //                            break;  // Since there are no duplicate edges
 //                        }
@@ -133,7 +133,7 @@
 //        {
 //            int i, j;
 //            Edge<T> e;
-            
+
 //            // Do the vertices exist?
 //            if ((i = FindVertex(name1)) > -1 && (j = FindVertex(name2)) > -1)
 //            {
@@ -258,7 +258,7 @@
 //            int i, j;
 //            for (i = 0; i < V.Count; i++)
 //                for (j = 0; j < V[i].E.Count; j++)
-//                        Console.WriteLine("(" + V[i].Name + "," + V[i].E[j].AdjVertex.Name + "," + V[i].E[j].Cost + ")");
+//                    Console.WriteLine("(" + V[i].Name + "," + V[i].E[j].AdjVertex.Name + "," + V[i].E[j].Cost + ")");
 //            Console.ReadLine();
 //        }
 //    }

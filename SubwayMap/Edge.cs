@@ -8,12 +8,12 @@ namespace SubwayMap
 {
     class Edge<T>
     {
-        public T StationName { get; set; }
+        public Vertex<T> AdjStation { get; set; }
         public string Colour { get; set; }
 
-        public Edge(T StationName, string Colour)
+        public Edge(Vertex<T> AdjStation, string Colour)
         {
-            this.StationName = StationName;
+            this.AdjStation = AdjStation;
             this.Colour = Colour;
         }
     }

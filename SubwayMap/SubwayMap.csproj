@@ -49,7 +49,7 @@
     <Compile Include="Program%281%29.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SubwayMap.cs" />
+    <Compile Include="SubwayMap1.cs" />
     <Compile Include="Vertex.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -57,7 +57,7 @@ namespace SubwayMap
                     break;
 
                 case "Add Link":
-                    char from, to = ' ';
+                    char from = ' ', to = ' ';
                     string color = " ";
                     bool error = false;
                     do
@@ -86,7 +86,7 @@ namespace SubwayMap
                         }
                         else
                         {
-
+                            error = true;
                         }
                     } while (error == true);
 
@@ -97,7 +97,33 @@ namespace SubwayMap
                     Console.WriteLine("Selected the third option\n");
                     break;
                 case "Remove Link":
-                    Console.WriteLine("Selected the fourth option\n");
+                    Console.Write("Enter the starting point of the link: ");
+                    char fromStation = ' ';
+                    char toStation = ' ';
+                    error = false;
+                    if (char.TryParse(Console.ReadLine(), out fromStation))
+                    {
+                        Console.Write("Enter the to station: ");
+
+                        if (char.TryParse(Console.ReadLine(), out toStation))
+                        {
+                            Console.Write("Enter the color of the link: ");
+                            color = Console.ReadLine();
+                            map.RemoveLink(fromStation, toStation, color);
+                        }
+                        else
+                        {
+                            error = true;
+                            ChangeColor(ConsoleColor.Red);
+                            Console.WriteLine("Invalid input please enter a character");
+                        }
+                    }
+                    else
+                    {
+                        ChangeColor(ConsoleColor.Red);
+                        error = true;
+                        Console.WriteLine("Invalid input please enter a character");
+                    }
                     break;
                 case "Print the Graph":
                     Console.Clear();
