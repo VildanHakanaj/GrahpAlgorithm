@@ -51,6 +51,7 @@ namespace SubwayMap
             return -1;
         }
 
+        public bool HasEdges() => Edges.Count > 0;
 
     }
 }

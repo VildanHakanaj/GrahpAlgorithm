@@ -44,19 +44,54 @@ namespace SubwayMap
                     Console.Write("Enter a name for the station ==> ");
                     if (char.TryParse(Console.ReadLine(), out station))
                     {
-                        map.InsertStation(station);
                         Console.Clear();
-                        Console.WriteLine("Just inserted station [ {0} ] into the graph", station);
+                        map.InsertStation(station);
                         wait();
                     }
                     else
                     {
+                        ChangeColor(ConsoleColor.Red);
                         Console.WriteLine("\nInvalid input! Needs to be a character\n");
+                        Console.ResetColor();
                     }
                     break;
 
                 case "Add Link":
-                    Console.WriteLine("Selected the second option\n");
+                    char from, to = ' ';
+                    string color = " ";
+                    bool error = false;
+                    do
+                    {
+                        if (error)
+                        {
+                            error = false;
+                            ChangeColor(ConsoleColor.Red);
+                            Console.WriteLine("Please make sure to ente a character for from and to and a string for color");
+                            wait();
+                        }
+
+                        Console.Write("\nEnter a starting station: ");
+                        if (char.TryParse(Console.ReadLine(), out from))
+                        {
+                            Console.Write("\nEnd a end station: to :");
+                            if (char.TryParse(Console.ReadLine(), out to))
+                            {
+                                Console.Write("\nEnter a color for the line");
+                                color = Console.ReadLine();
+                            }
+                            else
+                            {
+                                error = true;
+                            }
+                        }
+                        else
+                        {
+
+                        }
+                    } while (error == true);
+
+
+                    map.InsertLink(from, to, color);
                     break;
                 case "Remove Station":
                     Console.WriteLine("Selected the third option\n");
@@ -67,7 +102,7 @@ namespace SubwayMap
                 case "Print the Graph":
                     Console.Clear();
                     map.PrintGraph();
-                    Console.WriteLine("s", 3);
+                    wait();
                     break;
                 case "Clear Menu":
                     Console.WriteLine("Selected the sixth option");
@@ -80,6 +115,10 @@ namespace SubwayMap
             }
         }
 
+        private void ChangeColor(ConsoleColor color)
+        {
+            Console.ForegroundColor = color;
+        }
         private void wait()
         {
             Console.WriteLine("Press enter to continue...");
@@ -89,15 +128,13 @@ namespace SubwayMap
 
         private string SelectMenu()
         {
-
-
             Console.CursorVisible = false;
             for (int i = 0; i < menuItemsss.Count; i++)
             {
                 if (i == index)
                 {
-                    Console.BackgroundColor = ConsoleColor.Gray;
-                    Console.ForegroundColor = ConsoleColor.Black;
+                    Console.BackgroundColor = ConsoleColor.DarkCyan;
+                    Console.ForegroundColor = ConsoleColor.White;
                     Console.WriteLine(menuItemsss[i]);
                     Console.ResetColor();
                 }

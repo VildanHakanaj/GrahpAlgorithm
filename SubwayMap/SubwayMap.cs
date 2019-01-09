@@ -28,10 +28,11 @@ namespace SubwayMap
             if (FindVertex(name) == -1)
             {
                 Vertecies.Add(new Vertex<T>(name));
+                Console.WriteLine("Just inserted station [ {0} ] into the graph", name);
             }
             else
             {
-                Console.WriteLine("Station already exists\n");
+                Console.WriteLine("Station {0} already exists\n", name);
             }
         }
 
@@ -79,9 +80,16 @@ namespace SubwayMap
         {
             for (int i = 0; i < Vertecies.Count; i++)
             {
-                for (int j = 0; j < Vertecies[i].Edges.Count; j++)
+                if (Vertecies[i].HasEdges())
                 {
-                    Console.WriteLine("From:{0} --> TO: {1}-->Color {2}", Vertecies[i].Name, Vertecies[i].Edges[j].StationName, Vertecies[i].Edges[j].Colour);
+                    for (int j = 0; j < Vertecies[i].Edges.Count; j++)
+                    {
+                        Console.WriteLine("From:{0} --> TO: {1}-->Color {2}", Vertecies[i].Name, Vertecies[i].Edges[j].StationName, Vertecies[i].Edges[j].Colour);
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Station {0} doesn't have any edges", Vertecies[i].Name);
                 }
             }
         }
