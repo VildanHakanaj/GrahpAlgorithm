@@ -143,22 +143,25 @@ namespace SubwayMap
             // Mark the current node as visited 
             CurrentVertex.Visited = true;
 
-            // Initialize discovery time and low value 
-            CurrentVertex.Discovered = CurrentVertex.LowLink = time++;
+            //Timestamp when it was discovered 
+            CurrentVertex.Discovered = CurrentVertex.LowLink = ++time;
 
-            // Go through all vertices aadjacent to this 
+            // Go through all vertices adjacent to this 
             for (int i = 0; i < CurrentVertex.Edges.Count; i++)
             {
-                Vertex<T> AdjVertex = CurrentVertex.Edges[i].AdjStation;  // v is current adjacent of u 
-                                                                          // If v is not visited yet, then make it a child of in DFS tree and recur for it 
+                Vertex<T> AdjVertex = CurrentVertex.Edges[i].AdjStation;  // v is next adjacent of CurrentVertex 
+                                                                          // If AdjVertex is not visited yet, then make it a child of current vertex in DFS tree and recur for it 
                 if (!AdjVertex.Visited)
                 {
                     children++;
-                    AdjVertex.Parent = CurrentVertex;
+                    
+                    //Set the parent of the adjecent vertex
+                    AdjVertex.Parent = CurrentVertex; 
+
+                    //Run the Explore the adj vertex
                     APUtil(AdjVertex, ArticulationPoints);
 
                     // Check if the subtree rooted with v has a connection to 
-                    // one of the ancestors of u 
                     CurrentVertex.Discovered = Math.Min(CurrentVertex.LowLink, AdjVertex.LowLink);
 
                     // u is an articulation point in following cases 

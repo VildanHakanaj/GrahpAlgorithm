@@ -20,8 +20,9 @@ namespace SubwayMap
                 /*[9]*/"Test3",
                 /*[9]*/"Test4",
                 /*[9]*/"Test5",
-                /*[10]*/"Clear Graph",
-                /*[11]*/"Exit",
+                /*[10]*/"Test6",
+                /*[11]*/"Clear Graph",
+                /*[12]*/"Exit",
             };
         string selection;
         int index = 0;
@@ -56,7 +57,7 @@ namespace SubwayMap
                     {
                         Console.Clear();
                         map.InsertStation(station);
-                        wait();
+                        Wait();
                     }
                     else
                     {
@@ -77,7 +78,7 @@ namespace SubwayMap
                             error = false;
                             ChangeColor(ConsoleColor.Red);
                             Console.WriteLine("Please make sure to ente a character for from and to and a string for color");
-                            wait();
+                            Wait();
                         }
 
                         Console.Write("\nEnter a starting station: ");
@@ -138,7 +139,7 @@ namespace SubwayMap
                 case "Print the Graph":
                     Console.Clear();
                     map.PrintGraph();
-                    wait();
+                    Wait();
                     break;
                 case "Find the articulation points":
                     map.AP();
@@ -158,6 +159,9 @@ namespace SubwayMap
                 case "Test5":
                     Test5(map);
                     break;
+                case "Test6":
+                    Test6(map);
+                    break;
                 case "Clear Graph":
                     this.map = new SubwayMap<char>();
                     break;
@@ -173,7 +177,7 @@ namespace SubwayMap
         {
             Console.ForegroundColor = color;
         }
-        private void wait()
+        private void Wait()
         {
             Console.WriteLine("Press enter to continue...");
             Console.ReadKey();
@@ -279,11 +283,11 @@ namespace SubwayMap
             map.InsertStation('D');
             map.InsertStation('E');
             map.InsertStation('F');
-            //map.InsertStation('G');
+            map.InsertStation('G');
             map.InsertLink('A', 'B', "red");
             map.InsertLink('B', 'C', "red");
             map.InsertLink('B', 'D', "white");
-            //map.InsertLink('B', 'G', "white");
+            map.InsertLink('B', 'G', "white");
             map.InsertLink('B', 'E', "white");
             map.InsertLink('D', 'F', "white");
             map.InsertLink('E', 'F', "white");
@@ -314,14 +318,49 @@ namespace SubwayMap
             map.InsertStation('C');
             map.InsertStation('D');
             map.InsertStation('E');
+            map.InsertStation('G');
+            map.InsertStation('F');
             map.InsertLink('A', 'B', "red");
             map.InsertLink('B', 'C', "red");
-            map.InsertLink('C', 'D', "red");
-            map.InsertLink('C', 'E', "red");
+            map.InsertLink('C', 'A', "red");
+            map.InsertLink('B', 'D', "red");
+            map.InsertLink('B', 'E', "red");
             map.InsertLink('D', 'E', "red");
+            map.InsertLink('G', 'B', "red");
+            map.InsertLink('G', 'E', "red");
+
             Console.WriteLine("\nThe graph is populated with Test 5 sample\n\n");
             map.PrintGraph();
         }
 
+        public void Test6(SubwayMap<char> map)
+        {
+            map.InsertStation('A');
+            map.InsertStation('B');
+            map.InsertStation('C');
+            map.InsertStation('D');
+            map.InsertStation('E');
+            map.InsertStation('F');
+            map.InsertStation('G');
+            map.InsertStation('H');
+            map.InsertStation('I');
+            map.InsertStation('J');
+            map.InsertLink('A', 'B', "red");
+            map.InsertLink('A', 'D', "red");
+            map.InsertLink('A', 'C', "red");
+            map.InsertLink('B', 'C', "red");
+            map.InsertLink('C', 'D', "red");
+            map.InsertLink('C', 'G', "red");
+            map.InsertLink('C', 'E', "red");
+            map.InsertLink('G', 'E', "red");
+            map.InsertLink('G', 'F', "red");
+            map.InsertLink('F', 'J', "red");
+            map.InsertLink('F', 'I', "red");
+            map.InsertLink('F', 'H', "red");
+            map.InsertLink('H', 'I', "red");
+            map.InsertLink('I', 'J', "red");
+            Console.WriteLine("\nThe graph is populated with Test 6 sample\n\n");
+            map.PrintGraph();
+        }
     }
 }
