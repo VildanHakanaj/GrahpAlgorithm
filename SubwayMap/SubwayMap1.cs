@@ -128,47 +128,58 @@ namespace SubwayMap
             }
         }
         #region Articulation points
-        private void APUtil(int u, bool[] visited, int[] disc, int[] low, int[] parent, bool[] ap)
+        /// <summary>
+        /// APUtil
+        /// Will go and run DFS on the graph and find
+        /// all the articulation points
+        /// </summary>
+        /// <param name="CurrentVertex">The vertex we are currently on</param>
+        /// <param name="ArticulationPoints">The list of articulation points</param>
+        private void APUtil(Vertex<T> CurrentVertex, List<Vertex<T>> ArticulationPoints)
         {
             // Count of children in DFS Tree 
             int children = 0;
 
             // Mark the current node as visited 
-            visited[u] = true;
+            CurrentVertex.Visited = true;
 
             // Initialize discovery time and low value 
-            disc[u] = low[u] = time++;
+            CurrentVertex.Discovered = CurrentVertex.LowLink = time++;
 
             // Go through all vertices aadjacent to this 
-            for (int i = 0; i < Vertecies[u].Edges.Count; i++)
+            for (int i = 0; i < CurrentVertex.Edges.Count; i++)
             {
-                int v = FindVertex(Vertecies[u].Edges[i].AdjStation.Name);  // v is current adjacent of u 
-                                                                            // If v is not visited yet, then make it a child of in DFS tree and recur for it 
-                if (!visited[v])
+                Vertex<T> AdjVertex = CurrentVertex.Edges[i].AdjStation;  // v is current adjacent of u 
+                                                                          // If v is not visited yet, then make it a child of in DFS tree and recur for it 
+                if (!AdjVertex.Visited)
                 {
                     children++;
-                    parent[v] = u;
-                    APUtil(v, visited, disc, low, parent, ap);
+                    AdjVertex.Parent = CurrentVertex;
+                    APUtil(AdjVertex, ArticulationPoints);
 
                     // Check if the subtree rooted with v has a connection to 
                     // one of the ancestors of u 
-                    low[u] = Math.Min(low[u], low[v]);
+                    CurrentVertex.Discovered = Math.Min(CurrentVertex.LowLink, AdjVertex.LowLink);
 
                     // u is an articulation point in following cases 
 
                     // (1) u is root of DFS tree and has two or more chilren. 
-                    if (parent[u] == NIL && children > 1)
-                        ap[u] = true;
+                    if (CurrentVertex.Parent == null && children > 1)
+                    {
+                        ArticulationPoints.Add(CurrentVertex);
+                    }
 
                     // (2) If u is not root and low value of one of its child 
                     // is more than discovery value of u. 
-                    if (parent[u] != NIL && low[v] > disc[u])
-                        ap[u] = true;
+                    if (CurrentVertex.Parent != null && AdjVertex.LowLink > CurrentVertex.Discovered)
+                    {
+                        ArticulationPoints.Add(CurrentVertex);
+                    }
                 }
-                // Update low value of u for parent function calls. 
-                else if (v != parent[u])
+                else if (AdjVertex != CurrentVertex.Parent)
                 {
-                    low[u] = Math.Min(low[u], disc[v]);
+                    // Update low value of u for parent function calls. 
+                    CurrentVertex.LowLink = Math.Min(CurrentVertex.LowLink, AdjVertex.Discovered);
                 }
             }
         }
@@ -177,38 +188,29 @@ namespace SubwayMap
         public void AP()
         {
             int size = Vertecies.Count;
-            // Mark all the vertices as not visited 
-            bool[] visited = new bool[Vertecies.Count];
-            //Discovery time
-            int[] disc = new int[size];
-            //When it was 
-            int[] low = new int[size];
-            //Parents
-            int[] parent = new int[size];
-            //ArticulationPoints
-            bool[] ap = new bool[size]; // To store articulation points 
+            List<Vertex<T>> ArticulationPoints = new List<Vertex<T>>(); // To store articulation points 
 
             // Initialize parent and visited, and ap(articulation point) 
             // arrays 
             for (int i = 0; i < size; i++)
             {
-                parent[i] = NIL;
-                visited[i] = false;
-                ap[i] = false;
+                Vertecies[i].Parent = null;
+                Vertecies[i].Visited = false;
             }
 
             //Call the recursive helper function to find articulation
             // points in DFS tree rooted with vertex 'i'
             for (int i = 0; i < size; i++)
-                if (visited[i] == false)
+                if (Vertecies[i].Visited == false)
                 {
-                    APUtil(i, visited, disc, low, parent, ap);
+                    APUtil(Vertecies[i], ArticulationPoints);
                 }
+
             // Now ap[] contains articulation points, print them 
             Console.WriteLine();
             for (int i = 0; i < size; i++)
             {
-                if (ap[i])
+                if (ArticulationPoints.Contains(Vertecies[i]))
                 {
                     Console.WriteLine(Vertecies[i].Name + " Is an articulation Point");
                 }

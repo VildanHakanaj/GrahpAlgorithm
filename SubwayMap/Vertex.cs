@@ -21,6 +21,9 @@ namespace SubwayMap
         public T Name { get; set; }
         //IsVisited Flag
         public bool Visited { get; set; }
+        public int Discovered{ get; set; }
+        public int LowLink{ get; set; }
+        public Vertex<T> Parent { get; set; }
         //List of edges connected to this vertex
         public List<Edge<T>> Edges { get; set; }
 

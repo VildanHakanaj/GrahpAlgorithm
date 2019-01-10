@@ -246,43 +246,17 @@ namespace SubwayMap
             map.InsertStation('C');
             map.InsertStation('D');
             map.InsertStation('E');
-            map.InsertLink('A', 'B', "red");
-            map.InsertLink('B', 'C', "red");
-            map.InsertLink('C', 'D', "red");
-            map.InsertLink('D', 'E', "red");
+            map.InsertLink('A','B',"red");
+            map.InsertLink('A','C',"red");
+            map.InsertLink('B','C',"red");
+            map.InsertLink('C','D',"red");
+            map.InsertLink('D','E',"red");
             Console.WriteLine("\nThe graph is populated with Test 1 sample\n\n");
             map.PrintGraph();
+            Console.WriteLine("\n");
         }
 
-        public void Test4(SubwayMap<char> map)
-        {
-            map.InsertStation('A');
-            map.InsertStation('B');
-            map.InsertStation('C');
-            map.InsertStation('D');
-            map.InsertLink('A', 'B', "red");
-            map.InsertLink('A', 'C', "red");
-            map.InsertLink('B', 'C', "red");
-            map.InsertLink('B', 'D', "red");
-            Console.WriteLine("\nThe graph is populated with Test 4 sample\n\n");
-            map.PrintGraph();
-        }
-
-        public void Test5(SubwayMap<char> map)
-        {
-            map.InsertStation('A');
-            map.InsertStation('B');
-            map.InsertStation('C');
-            map.InsertStation('D');
-            map.InsertStation('E');
-            map.InsertLink('A', 'B', "red");
-            map.InsertLink('B', 'C', "red");
-            map.InsertLink('C', 'D', "red");
-            map.InsertLink('C', 'E', "red");
-            map.InsertLink('D', 'E', "red");
-            Console.WriteLine("\nThe graph is populated with Test 5 sample\n\n");
-            map.PrintGraph();
-        }
+        
 
         public void Test2(SubwayMap<char> map)
         {
@@ -305,14 +279,47 @@ namespace SubwayMap
             map.InsertStation('D');
             map.InsertStation('E');
             map.InsertStation('F');
+            //map.InsertStation('G');
             map.InsertLink('A', 'B', "red");
             map.InsertLink('B', 'C', "red");
-            map.InsertLink('C', 'D', "white");
-            map.InsertLink('C', 'E', "white");
+            map.InsertLink('B', 'D', "white");
+            //map.InsertLink('B', 'G', "white");
+            map.InsertLink('B', 'E', "white");
             map.InsertLink('D', 'F', "white");
             map.InsertLink('E', 'F', "white");
 
             Console.WriteLine("\nThe graph is populated with Test 3 sample\n\n");
+            map.PrintGraph();
+            Console.WriteLine();
+        }
+
+        public void Test4(SubwayMap<char> map)
+        {
+            map.InsertStation('A');
+            map.InsertStation('B');
+            map.InsertStation('C');
+            map.InsertStation('D');
+            map.InsertLink('A', 'B', "red");
+            map.InsertLink('B', 'C', "red");
+            map.InsertLink('C', 'D', "red");
+            Console.WriteLine("\nThe graph is populated with Test 4 sample\n\n");
+            map.PrintGraph();
+            Console.WriteLine();
+        }
+
+        public void Test5(SubwayMap<char> map)
+        {
+            map.InsertStation('A');
+            map.InsertStation('B');
+            map.InsertStation('C');
+            map.InsertStation('D');
+            map.InsertStation('E');
+            map.InsertLink('A', 'B', "red");
+            map.InsertLink('B', 'C', "red");
+            map.InsertLink('C', 'D', "red");
+            map.InsertLink('C', 'E', "red");
+            map.InsertLink('D', 'E', "red");
+            Console.WriteLine("\nThe graph is populated with Test 5 sample\n\n");
             map.PrintGraph();
         }
 
