@@ -177,6 +177,9 @@ namespace SubwayMap
                     break;
                 case "Clear Graph":
                     this.map = new SubwayMap<char>();
+                    Console.WriteLine("Graph is cleared");
+                    Wait();
+                    Console.Clear();
                     break;
                 case "Exit":
                     Environment.Exit(1);
