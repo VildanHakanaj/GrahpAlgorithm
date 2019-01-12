@@ -10,7 +10,7 @@ namespace SubwayMap
     {
         private List<Vertex<T>> Vertecies;
         private int time = 0;
-        private const int NIL = -1;
+
         public SubwayMap()
         {
             Vertecies = new List<Vertex<T>>();
@@ -29,14 +29,22 @@ namespace SubwayMap
             if (FindVertex(name) == -1)
             {
                 Vertecies.Add(new Vertex<T>(name));
-                Console.WriteLine("Just inserted station [ {0} ] into the graph", name);
+                MessageDisplay("Just inserted station [ " + name + " ] into the graph\n", ConsoleColor.Green);
             }
             else
             {
-                Console.WriteLine("Station {0} already exists\n", name);
+                MessageDisplay("Station " + name + " already exists\n", ConsoleColor.Red);
             }
         }
 
+        /// <summary>
+        ///InsertLink
+        ///Will insert a link if it doesn't exist
+        ///if it does then it will not accept the link
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <param name="color"></param>
         public void InsertLink(T from, T to, string color)
         {
             int fromPos, toPos;
@@ -50,92 +58,107 @@ namespace SubwayMap
                 }
                 else
                 {
-                    Console.WriteLine("The link with color {0} from {1} to {2} already exists", color, from, to);
+                    MessageDisplay("The link with color " + color + " from " + from + " to " + to + " already exists\n", ConsoleColor.Red);
                 }
             }
         }
 
+        /// <summary>
+        /// Remove the link between two vertecies
+        /// if the vertecies dont exists it will throw an error.
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <param name="color"></param>
         public void RemoveLink(T from, T to, string color)
         {
             int fromPos, toPos, edgePos;
-
-            //The vertecies exists
+            Vertex<T> FromVertex, ToVertex;
+            //Find if the vertecies exists
             if ((fromPos = FindVertex(from)) > -1 && (toPos = FindVertex(to)) > -1)
             {
 
+                FromVertex = Vertecies[fromPos];
+                ToVertex = Vertecies[toPos];
+
+                //I asume that the edge is viceversa so i wont need to check the other way around 
                 //There is an edge
                 if ((edgePos = Vertecies[fromPos].FindEdge(to, color)) > -1)
                 {
                     //Remove the link from the FROM station
                     Vertecies[fromPos].Edges.RemoveAt(edgePos);
-                    //Remove the link from the TO station
+                    edgePos = Vertecies[toPos].FindEdge(from, color);
                     Vertecies[toPos].Edges.RemoveAt(edgePos);
-                    Console.WriteLine("\nJust Deleted the link between {0} and {1}", Vertecies[fromPos].Name, Vertecies[toPos].Name);
+                    MessageDisplay("\nJust Deleted the link between " + FromVertex.Name + " and " + ToVertex.Name + "\n", ConsoleColor.Green);
                 }
                 else
                 {
-                    Console.WriteLine("\nThe link between {0} and {1} doesn't exist", Vertecies[fromPos].Name, Vertecies[toPos].Name);
+                    MessageDisplay("\nThe link between " + Vertecies[fromPos].Name  + " and "+ Vertecies[toPos].Name + " with color " + color + " doesn't exist\n", ConsoleColor.Red);
+                    Console.WriteLine("Press any key to continue!");
+                    Console.ReadKey();
                 }
             }
             else
             {
-                Console.WriteLine("\nOne of the station inputed doesn't exists");
+                MessageDisplay("\nOne of the station inputed doesn't exists\n", ConsoleColor.Red);
+                Console.WriteLine("Press any key to continue!");
+                Console.ReadKey();
             }
         }
 
-        // Breadth-First Search
-        // Performs a breadth-first search (with re-start)
-        // Time Complexity: O(max(n,m))
 
-        public void BreadthFirstSearch()
-        {
-            int i;
-            for (i = 0; i < Vertecies.Count; i++)
-            {
-                Vertecies[i].Visited = false;              // Set all vertices as unvisited
-            }
-            for (i = 0; i < Vertecies.Count; i++)
-                if (!Vertecies[i].Visited)                  // (Re)start with vertex i
-                {
-                    BreadthFirstSearch(Vertecies[i]);
-                    Console.WriteLine();
-                }
-        }
-
-        private void BreadthFirstSearch(Vertex<T> v)
-        {
-            int j;
-            Vertex<T> w;
-            Queue<Vertex<T>> Q = new Queue<Vertex<T>>();
-
-            v.Visited = true;        // Mark vertex as visited when placed in the queue
-            Q.Enqueue(v);
-
-            while (Q.Count != 0)
-            {
-                v = Q.Dequeue();     // Output vertex when removed from the queue
-                Console.WriteLine(v.Name);
-
-                for (j = 0; j < v.Edges.Count; j++)    // Enqueue unvisited adjacent vertices
-                {
-                    w = v.Edges[j].AdjStation;
-                    if (!w.Visited)
-                    {
-                        w.Visited = true;          // Mark vertex as visited
-                        Q.Enqueue(w);
-                    }
-                }
-            }
-        }
         #region Articulation points
         /// <summary>
-        /// APUtil
+        /// CriticalPoints 
+        /// Sets all the vertecies like unvisited 
+        /// Creates the articulation poin list
+        /// </summary>
+        public void CriticalPoints()
+        {
+            int size = Vertecies.Count;
+            List<Vertex<T>> ArticulationPoints = new List<Vertex<T>>(); // To store articulation points 
+
+            // Initialize parent and visited, and ap(articulation point) 
+            // arrays 
+            for (int i = 0; i < size; i++)
+            {
+                Vertecies[i].Parent = null;
+                Vertecies[i].Visited = false;
+            }
+
+            //Call the recursive helper function to find articulation
+            // points in DFS tree rooted with vertex 'i'
+            for (int i = 0; i < size; i++)
+                if (Vertecies[i].Visited == false)
+                {
+                    CriticalPoints(Vertecies[i], ArticulationPoints);
+                }
+
+            // Now ap[] contains articulation points, print them 
+            Console.WriteLine();
+            for (int i = 0; i < size; i++)
+            {
+                if (ArticulationPoints.Contains(Vertecies[i]))
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine(Vertecies[i].Name + " Is an articulation Point");
+                    Console.ResetColor();
+                }
+            }
+            Console.WriteLine();
+        }
+
+        /// <summary>
+        /// CriticalPoints
         /// Will go and run DFS on the graph and find
         /// all the articulation points
+        /// 
+        /// In this method i have utilized the articulation point algorithm 
+        /// which will find the critical points of this graphs
         /// </summary>
         /// <param name="CurrentVertex">The vertex we are currently on</param>
         /// <param name="ArticulationPoints">The list of articulation points</param>
-        private void APUtil(Vertex<T> CurrentVertex, List<Vertex<T>> ArticulationPoints)
+        private void CriticalPoints(Vertex<T> CurrentVertex, List<Vertex<T>> ArticulationPoints)
         {
             // Count of children in DFS Tree 
             int children = 0;
@@ -154,15 +177,15 @@ namespace SubwayMap
                 if (!AdjVertex.Visited)
                 {
                     children++;
-                    
+
                     //Set the parent of the adjecent vertex
-                    AdjVertex.Parent = CurrentVertex; 
+                    AdjVertex.Parent = CurrentVertex;
 
                     //Run the Explore the adj vertex
-                    APUtil(AdjVertex, ArticulationPoints);
+                    CriticalPoints(AdjVertex, ArticulationPoints);
 
-                    // Check if the subtree rooted with v has a connection to 
-                    CurrentVertex.Discovered = Math.Min(CurrentVertex.LowLink, AdjVertex.LowLink);
+                    // Check if the subtree rooted with AdjVertex has a connection to 
+                    CurrentVertex.LowLink = Math.Min(CurrentVertex.LowLink, AdjVertex.LowLink);
 
                     // u is an articulation point in following cases 
 
@@ -173,8 +196,8 @@ namespace SubwayMap
                     }
 
                     // (2) If u is not root and low value of one of its child 
-                    // is more than discovery value of u. 
-                    if (CurrentVertex.Parent != null && AdjVertex.LowLink > CurrentVertex.Discovered)
+                    // is more than discovery value of u.  
+                    if (CurrentVertex.Parent != null && AdjVertex.LowLink >= CurrentVertex.Discovered)
                     {
                         ArticulationPoints.Add(CurrentVertex);
                     }
@@ -187,39 +210,6 @@ namespace SubwayMap
             }
         }
 
-        // The function to do DFS traversal. It uses recursive function APUtil() 
-        public void AP()
-        {
-            int size = Vertecies.Count;
-            List<Vertex<T>> ArticulationPoints = new List<Vertex<T>>(); // To store articulation points 
-
-            // Initialize parent and visited, and ap(articulation point) 
-            // arrays 
-            for (int i = 0; i < size; i++)
-            {
-                Vertecies[i].Parent = null;
-                Vertecies[i].Visited = false;
-            }
-
-            //Call the recursive helper function to find articulation
-            // points in DFS tree rooted with vertex 'i'
-            for (int i = 0; i < size; i++)
-                if (Vertecies[i].Visited == false)
-                {
-                    APUtil(Vertecies[i], ArticulationPoints);
-                }
-
-            // Now ap[] contains articulation points, print them 
-            Console.WriteLine();
-            for (int i = 0; i < size; i++)
-            {
-                if (ArticulationPoints.Contains(Vertecies[i]))
-                {
-                    Console.WriteLine(Vertecies[i].Name + " Is an articulation Point");
-                }
-            }
-            Console.WriteLine();
-        }
         #endregion
         #region HelperMethods
 
@@ -252,14 +242,24 @@ namespace SubwayMap
                 {
                     for (int j = 0; j < Vertecies[i].Edges.Count; j++)
                     {
-                        Console.WriteLine("From:{0} --> TO: {1}-->Color {2}", Vertecies[i].Name, Vertecies[i].Edges[j].AdjStation.Name, Vertecies[i].Edges[j].Colour);
+                        Console.WriteLine("[ {0} ] --> [ {1} ] ==> {2}", Vertecies[i].Name, Vertecies[i].Edges[j].AdjStation.Name, Vertecies[i].Edges[j].Colour);
                     }
                 }
                 else
                 {
-                    Console.WriteLine("Station {0} doesn't have any edges", Vertecies[i].Name);
+                    MessageDisplay("Station " + Vertecies[i].Name + " doesn't have any edges", ConsoleColor.Yellow);
+                    Console.WriteLine("Press any key to continue!");
+                    Console.ReadKey();
                 }
             }
+        }
+
+        private void MessageDisplay(string message, ConsoleColor color)
+        {
+            Console.ForegroundColor = color;
+            Console.WriteLine(message);
+            Console.ResetColor();
+
         }
 
         #endregion
