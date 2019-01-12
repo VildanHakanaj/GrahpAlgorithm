@@ -177,6 +177,9 @@ namespace SubwayMap
                     break;
                 case "Clear Graph":
                     this.map = new SubwayMap<char>();
+                    Console.WriteLine("Graph is cleared");
+                    Wait();
+                    Console.Clear();
                     break;
                 case "Exit":
                     Environment.Exit(1);
@@ -184,17 +187,6 @@ namespace SubwayMap
                 default:
                     break;
             }
-        }
-
-        private void ChangeColor(ConsoleColor color)
-        {
-            Console.ForegroundColor = color;
-        }
-        private void Wait()
-        {
-            Console.WriteLine("Press enter to continue...");
-            Console.ReadKey();
-            Console.Clear();
         }
 
         private string SelectMenu()
@@ -256,6 +248,21 @@ namespace SubwayMap
             return false;
         }
 
+        #region HelperMethods
+
+        private void ChangeColor(ConsoleColor color)
+        {
+            Console.ForegroundColor = color;
+        }
+        private void Wait()
+        {
+            Console.WriteLine("Press enter to continue...");
+            Console.ReadKey();
+            Console.Clear();
+        }
+        #endregion
+
+        #region Testing Cases
         public void Test1(SubwayMap<char> map)
         {
             map.InsertStation('A');
@@ -278,8 +285,6 @@ namespace SubwayMap
             map.PrintGraph();
             Console.WriteLine("\n");
         }
-
-        
 
         public void Test2(SubwayMap<char> map)
         {
@@ -428,5 +433,6 @@ namespace SubwayMap
             Console.WriteLine("\nThe graph is populated with Test 5 sample\n\n");
             map.PrintGraph();
         }
+        #endregion
     }
 }
