@@ -44,12 +44,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Edge.cs" />
-    <Compile Include="matrices.cs" />
+    <Compile Include="ISubwayMap.cs" />
     <Compile Include="Menu.cs" />
-    <Compile Include="Program%281%29.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SubwayMap1.cs" />
+    <Compile Include="SubwayMap.cs" />
     <Compile Include="Vertex.cs" />
   </ItemGroup>
   <ItemGroup>

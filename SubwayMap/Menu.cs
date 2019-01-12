@@ -8,7 +8,12 @@ namespace SubwayMap
 {
     class Menu
     {
-        List<string> menuItemsss = new List<string>(){
+
+        #region Variable Declaration
+        string selection;
+        int index = 0;
+        SubwayMap<char> map;
+        private List<string> menuItemsss = new List<string>(){
                 /*[1]*/"Add Station",
                 /*[2]*/"Add Link",
                 /*[3]*/"Remove Station",
@@ -25,13 +30,13 @@ namespace SubwayMap
                 /*[11]*/"Clear Graph",
                 /*[12]*/"Exit",
             };
-        string selection;
-        int index = 0;
-        SubwayMap<char> map;
+        #endregion
         public Menu(SubwayMap<char> map)
         {
             this.map = map;
         }
+
+        #region MainMenuMethods
         public void ShowMenu()
         {
             while (true)
@@ -45,8 +50,37 @@ namespace SubwayMap
 
             }
         }
-
-
+        public bool DetectKey()
+        {
+            ConsoleKeyInfo ckey = Console.ReadKey();
+            if (ckey.Key == ConsoleKey.DownArrow)
+            {
+                if (index == menuItemsss.Count - 1)
+                {
+                    index = 0;
+                }
+                else
+                {
+                    index++;
+                }
+            }
+            else if (ckey.Key == ConsoleKey.UpArrow)
+            {
+                if (index == 0)
+                {
+                    index = menuItemsss.Count - 1;
+                }
+                else
+                {
+                    index--;
+                }
+            }
+            else if (ckey.Key == ConsoleKey.Enter)
+            {
+                return true;
+            }
+            return false;
+        }
         private void ExecuteSelection(string selection, SubwayMap<char> map)
         {
             switch (selection)
@@ -188,7 +222,6 @@ namespace SubwayMap
                     break;
             }
         }
-
         private string SelectMenu()
         {
             Console.CursorVisible = false;
@@ -216,37 +249,7 @@ namespace SubwayMap
             return "";
         }
 
-        public bool DetectKey()
-        {
-            ConsoleKeyInfo ckey = Console.ReadKey();
-            if (ckey.Key == ConsoleKey.DownArrow)
-            {
-                if (index == menuItemsss.Count - 1)
-                {
-                    index = 0;
-                }
-                else
-                {
-                    index++;
-                }
-            }
-            else if (ckey.Key == ConsoleKey.UpArrow)
-            {
-                if (index == 0)
-                {
-                    index = menuItemsss.Count - 1;
-                }
-                else
-                {
-                    index--;
-                }
-            }
-            else if (ckey.Key == ConsoleKey.Enter)
-            {
-                return true;
-            }
-            return false;
-        }
+        #endregion
 
         #region HelperMethods
 
