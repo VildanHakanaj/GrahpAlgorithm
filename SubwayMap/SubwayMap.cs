@@ -109,6 +109,32 @@ namespace SubwayMap
         }
         #endregion
 
+        #region ShortestPath
+        public void ShortestPath() 
+        {
+            //set all the vertecies as not visited
+            for (int i = 0; i < Vertecies.Count; i++)
+            {
+                Vertecies[i].Visited = false;
+            }
+
+            //Run the breadth first seach
+            for (int i = 0; i < Vertecies.Count; i++)
+            {
+                if (!Vertecies[i].Visited)
+                {
+                    ShortestPath(Vertecies[i]);
+                }
+            }
+
+        }
+
+        private void ShortestPath(Vertex<T> CurrentVertex)
+        {
+
+        }
+        #endregion
+
         #region Articulation points
         /// <summary>
         /// CriticalPoints 

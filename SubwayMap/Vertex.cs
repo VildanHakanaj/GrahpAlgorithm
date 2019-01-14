@@ -4,15 +4,6 @@ namespace SubwayMap
 {
     class Vertex<T>
     {
-        /*
-         * Data fields
-         * [ ] bool value to check if the station has been visited
-         * [ ] A list of edges that this vertex is connected to
-         * [ ] T name to name the vertex
-         * Methods
-         * [ ] Vertex() -> constructor
-         * [ ] FindEdge(string name)-> Find if this vertex has any edges
-         */
          //The name of the vertex
         public T Name { get; set; }
         //IsVisited Flag

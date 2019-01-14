@@ -109,17 +109,17 @@ namespace SubwayMap
                         {
                             error = false;
                             ChangeColor(ConsoleColor.Red);
-                            Console.WriteLine("Please make sure to ente a character for from and to and a string for color");
+                            Console.WriteLine("Please make sure to enter a character for from and to and a string for color");
                             Wait();
                         }
 
                         Console.Write("\nEnter a starting station: ");
                         if (char.TryParse(Console.ReadLine(), out from))
                         {
-                            Console.Write("\nEnd a end station: to :");
+                            Console.Write("\nEnd a end station to : ");
                             if (char.TryParse(Console.ReadLine(), out to))
                             {
-                                Console.Write("\nEnter a color for the line");
+                                Console.Write("\nEnter a color for the line: ");
                                 color = Console.ReadLine();
                             }
                             else
@@ -136,9 +136,6 @@ namespace SubwayMap
 
                     map.InsertLink(from, to, color);
                     Wait();
-                    break;
-                case "Remove Station":
-                    Console.WriteLine("Selected the third option\n");
                     break;
                 case "Remove Link":
                     Console.Write("Enter the starting point of the link: ");
