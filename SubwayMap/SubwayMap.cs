@@ -278,9 +278,10 @@ namespace SubwayMap
                 {
                     MessageDisplay("Station " + Vertecies[i].Name + " doesn't have any edges", ConsoleColor.Yellow);
                     Console.WriteLine("Press any key to continue!");
-                    Console.ReadKey();
                 }
             }
+            Console.ReadKey();
+
         }
 
         private void MessageDisplay(string message, ConsoleColor color)
