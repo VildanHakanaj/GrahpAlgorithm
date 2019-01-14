@@ -5,18 +5,18 @@ namespace SubwayMap
 {
     class Menu
     {
-
         #region Variable Declaration
-        string selection;
-        int index = 0;
-        SubwayMap<char> map;
+        private string selection;
+        private int index = 0;
+        private SubwayMap<char> map;
         private List<string> menuItemsss = new List<string>(){
                 /*[1]*/"Add Station",
                 /*[2]*/"Add Link",
                 /*[3]*/"Remove Station",
                 /*[4]*/"Remove Link",
-                /*[5]*/"Print the Graph",
                 /*[6]*/"Find the articulation points",
+                /*[5]*/"Find shortest path between two stations",
+                /*[5]*/"Print the Graph",
                 /*[7]*/"Test1",
                 /*[8]*/"Test2",
                 /*[9]*/"Test3",

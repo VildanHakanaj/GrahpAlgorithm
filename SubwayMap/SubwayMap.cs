@@ -110,28 +110,65 @@ namespace SubwayMap
         #endregion
 
         #region ShortestPath
-        public void ShortestPath() 
+        public void ShortestPath(T from, T to)
         {
-            //set all the vertecies as not visited
-            for (int i = 0; i < Vertecies.Count; i++)
+            //Store the position of the vertecies from and to
+            int fromPos, toPos;
+            //Check if the vertexes exists
+            if ((fromPos = FindVertex(from)) > -1 && (toPos = FindVertex(to)) > -1)
             {
-                Vertecies[i].Visited = false;
+                Console.WriteLine("The two vertecies exist");
+                ShortestPath(Vertecies[fromPos], Vertecies[toPos]);
             }
-
-            //Run the breadth first seach
-            for (int i = 0; i < Vertecies.Count; i++)
+            else
             {
-                if (!Vertecies[i].Visited)
-                {
-                    ShortestPath(Vertecies[i]);
-                }
+                Console.WriteLine("Error one of the stations doesn't exists");
             }
 
         }
 
-        private void ShortestPath(Vertex<T> CurrentVertex)
+        private void ShortestPath(Vertex<T> CurrentStation, Vertex<T> ToStation)
         {
+            //Queue to store the vertex i find
+            Queue<Vertex<T>> queue = new Queue<Vertex<T>>();
+            //To keep track of the previous vertex
+            Vertex<T> prev;
+            //Set the status as visited for that vertex 
+            CurrentStation.Visited = true;
+            //Store the first vertex
+            queue.Enqueue(CurrentStation);
+            //Do until the queue is empty
+            while (queue.Count > 0)
+            {
+                //Keep the parent
+                prev = CurrentStation;
 
+                //[ ] Add the current vertex as the parent of the Adjvertex 
+
+                //Get the next child
+                CurrentStation = queue.Dequeue();
+
+                //Check if we have reached the destination
+                if (!CurrentStation.Visited && CurrentStation.Equals(ToStation))
+                {
+                    Console.WriteLine("We have a match for sation {0}", ToStation.Name);
+                }
+                else
+                {
+                    //Set the vertex where it came from
+                    CurrentStation.Parent = prev;
+                    for (int i = 0; i < CurrentStation.Edges.Count; i++)
+                    {
+                        if (!CurrentStation.Edges[i].AdjStation.Visited)
+                        {
+                            //Set the status as visited 
+                            CurrentStation.Edges[i].AdjStation.Visited = true;
+                            //Add that vertex into the queue
+                            queue.Enqueue(CurrentStation.Edges[i].AdjStation);
+                        }
+                    }
+                }
+            }
         }
         #endregion
 
@@ -277,9 +314,9 @@ namespace SubwayMap
                 else
                 {
                     MessageDisplay("Station " + Vertecies[i].Name + " doesn't have any edges", ConsoleColor.Yellow);
-                    Console.WriteLine("Press any key to continue!");
                 }
             }
+            Console.WriteLine("Press any key to continue!");
             Console.ReadKey();
 
         }
