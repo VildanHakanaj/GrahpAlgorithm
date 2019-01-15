@@ -9,7 +9,11 @@ namespace SubwayMap
             Console.BackgroundColor = ConsoleColor.White;
             SubwayMap<char> map = new SubwayMap<char>();
             Menu menu = new Menu(map);
-            menu.ShowMenu();
+
+            menu.Test6(map);
+            map.ShortestPath('A', 'E');
+            Console.ReadKey();  
+            //menu.ShowMenu();
         }
     }
 }

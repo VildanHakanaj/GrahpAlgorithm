@@ -13,6 +13,7 @@ namespace SubwayMap
         public Vertex<T> Parent { get; set; }
         //List of edges connected to this vertex
         public List<Edge<T>> Edges { get; set; }
+        public int layer { get; set; }
 
         public Vertex(T Name)
         {
@@ -41,6 +42,14 @@ namespace SubwayMap
             return -1;
         }
 
+        /// <summary>
+        /// GetAdjacentVertex
+        /// This method will go and get the adjacent vertex
+        /// in the given position
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <returns></returns>
+        public Vertex<T> GetAdjacentVertex(int pos) => Edges[pos].AdjStation;
         public bool HasEdges() => Edges.Count > 0;
 
     }

@@ -112,62 +112,57 @@ namespace SubwayMap
         #region ShortestPath
         public void ShortestPath(T from, T to)
         {
-            //Store the position of the vertecies from and to
+            Queue<Vertex<T>> queue = new Queue<Vertex<T>>();
             int fromPos, toPos;
-            //Check if the vertexes exists
+            for (int i = 0; i < Vertecies.Count; i++)
+            {
+                Vertecies[i].Visited = false;
+            }
+
             if ((fromPos = FindVertex(from)) > -1 && (toPos = FindVertex(to)) > -1)
             {
-                Console.WriteLine("The two vertecies exist");
-                ShortestPath(Vertecies[fromPos], Vertecies[toPos]);
-            }
-            else
-            {
-                Console.WriteLine("Error one of the stations doesn't exists");
-            }
+                //Visit the starting point
+                Vertex<T> StartVertex, EndVertex, CurrentVertex, OldVertex;
+                //Get the starting and ending vertex
+                StartVertex = Vertecies[fromPos];
+                EndVertex = Vertecies[toPos];
 
-        }
-
-        private void ShortestPath(Vertex<T> CurrentStation, Vertex<T> ToStation)
-        {
-            //Queue to store the vertex i find
-            Queue<Vertex<T>> queue = new Queue<Vertex<T>>();
-            //To keep track of the previous vertex
-            Vertex<T> prev;
-            //Set the status as visited for that vertex 
-            CurrentStation.Visited = true;
-            //Store the first vertex
-            queue.Enqueue(CurrentStation);
-            //Do until the queue is empty
-            while (queue.Count > 0)
-            {
-                //Keep the parent
-                prev = CurrentStation;
-
-                //[ ] Add the current vertex as the parent of the Adjvertex 
-
-                //Get the next child
-                CurrentStation = queue.Dequeue();
-
-                //Check if we have reached the destination
-                if (!CurrentStation.Visited && CurrentStation.Equals(ToStation))
+                //Start from layer one
+                StartVertex.layer = 0;
+                //Visit the start vertex
+                StartVertex.Visited = true;
+                //Place it in the queue
+                queue.Enqueue(StartVertex);
+                //loop through the queue as long as there is items in them
+                while (queue.Count > 0)
                 {
-                    Console.WriteLine("We have a match for sation {0}", ToStation.Name);
-                }
-                else
-                {
-                    //Set the vertex where it came from
-                    CurrentStation.Parent = prev;
-                    for (int i = 0; i < CurrentStation.Edges.Count; i++)
+                    //Get the next vertex
+                    CurrentVertex = queue.Dequeue();
+                    if (CurrentVertex.Equals(EndVertex))
                     {
-                        if (!CurrentStation.Edges[i].AdjStation.Visited)
+                        Console.WriteLine("We found the end vertex at layer {0}", CurrentVertex.layer);
+                    }
+
+                    //Add all the adjacent vertecies
+                    for (int i = 0; i < CurrentVertex.Edges.Count; i++)
+                    {
+
+                        //Check if the vertex hasnt been visited before
+                        if (!CurrentVertex.Edges[i].AdjStation.Visited)
                         {
-                            //Set the status as visited 
-                            CurrentStation.Edges[i].AdjStation.Visited = true;
-                            //Add that vertex into the queue
-                            queue.Enqueue(CurrentStation.Edges[i].AdjStation);
+                            //Change the layer
+                            CurrentVertex.Edges[i].AdjStation.layer = CurrentVertex.layer++;
+                            //Set the status to visited 
+                            CurrentVertex.Edges[i].AdjStation.Visited = true;
+                            //Enqueue the vertex
+                            queue.Enqueue(CurrentVertex.Edges[i].AdjStation);
                         }
                     }
                 }
+            }
+            else
+            {
+                Console.WriteLine("One of the stations doesn't exists\n");
             }
         }
         #endregion
