@@ -5,18 +5,18 @@ namespace SubwayMap
 {
     class Menu
     {
-
         #region Variable Declaration
-        string selection;
-        int index = 0;
-        SubwayMap<char> map;
+        private string selection;
+        private int index = 0;
+        private SubwayMap<char> map;
         private List<string> menuItemsss = new List<string>(){
                 /*[1]*/"Add Station",
                 /*[2]*/"Add Link",
                 /*[3]*/"Remove Station",
                 /*[4]*/"Remove Link",
-                /*[5]*/"Print the Graph",
                 /*[6]*/"Find the articulation points",
+                /*[5]*/"Find shortest path between two stations",
+                /*[5]*/"Print the Graph",
                 /*[7]*/"Test1",
                 /*[8]*/"Test2",
                 /*[9]*/"Test3",
@@ -24,6 +24,7 @@ namespace SubwayMap
                 /*[9]*/"Test5",
                 /*[10]*/"Test6",
                 /*[10]*/"Test7",
+                /*[10]*/"TestSPT",
                 /*[11]*/"Clear Graph",
                 /*[12]*/"Exit",
             };
@@ -47,7 +48,7 @@ namespace SubwayMap
 
             }
         }
-        public bool DetectKey()
+        private bool DetectKey()
         {
             ConsoleKeyInfo ckey = Console.ReadKey();
             if (ckey.Key == ConsoleKey.DownArrow)
@@ -229,6 +230,10 @@ namespace SubwayMap
                     break;
                 case "Test7":
                     Test7(map);
+                    Wait();
+                    break;
+                case "TestSPT":
+                    TestSPT(map);
                     Wait();
                     break;
                 case "Clear Graph":
@@ -457,6 +462,25 @@ namespace SubwayMap
 
             Console.WriteLine("\nThe graph is populated with Test 5 sample\n\n");
             map.PrintGraph();
+        }
+
+        public void TestSPT(SubwayMap<char> map)
+        {
+            map.InsertStation('A');
+            map.InsertStation('B');
+            map.InsertStation('C');
+            map.InsertStation('D');
+            map.InsertStation('E');
+            map.InsertStation('F');
+            map.InsertLink('A', 'B', "red");
+            map.InsertLink('A', 'C', "red");
+            map.InsertLink('A', 'F', "red");
+            map.InsertLink('B', 'C', "red");
+            map.InsertLink('B', 'D', "red");
+            map.InsertLink('D', 'C', "red");
+            map.InsertLink('D', 'E', "red");
+            map.InsertLink('E', 'F', "red");
+            map.InsertLink('C', 'F', "red");
         }
         #endregion
     }

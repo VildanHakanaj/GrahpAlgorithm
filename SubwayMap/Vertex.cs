@@ -6,14 +6,22 @@ namespace SubwayMap
     {
          //The name of the vertex
         public T Name { get; set; }
+
         //IsVisited Flag
         public bool Visited { get; set; }
+
+        //Time when it was discovered
         public int Discovered{ get; set; }
+
+        //The lowest back edge 
         public int LowLink{ get; set; }
+
+        //The parent where it came from
         public Vertex<T> Parent { get; set; }
+
         //List of edges connected to this vertex
         public List<Edge<T>> Edges { get; set; }
-        public int layer { get; set; }
+        public int Layer { get; set; }
 
         public Vertex(T Name)
         {
@@ -43,13 +51,25 @@ namespace SubwayMap
         }
 
         /// <summary>
-        /// GetAdjacentVertex
-        /// This method will go and get the adjacent vertex
-        /// in the given position
+        /// Get Adjacent Vertex
+        /// 
+        /// Used to retrive the adjacent vertex
+        /// from the edges list from the given position
+        /// 
         /// </summary>
-        /// <param name="pos"></param>
+        /// <param name="pos">The position where to find the vertex</param>
         /// <returns></returns>
         public Vertex<T> GetAdjacentVertex(int pos) => Edges[pos].AdjStation;
+
+        /// <summary>
+        /// Has edges
+        /// 
+        /// Check if the vertex has any edges.
+        /// 
+        /// 
+        /// </summary>
+        /// <returns> { true } if it has any edges </returns>
+        /// <returns> { false } if it doesn't have any edges </returns>
         public bool HasEdges() => Edges.Count > 0;
 
     }
