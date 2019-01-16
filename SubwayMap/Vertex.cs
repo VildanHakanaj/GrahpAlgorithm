@@ -4,17 +4,19 @@ namespace SubwayMap
 {
     class Vertex<T>
     {
-         //The name of the vertex
+        #region Data Fields
+
+        //The name of the vertex
         public T Name { get; set; }
 
         //IsVisited Flag
         public bool Visited { get; set; }
 
         //Time when it was discovered
-        public int Discovered{ get; set; }
+        public int Discovered { get; set; }
 
         //The lowest back edge 
-        public int LowLink{ get; set; }
+        public int LowLink { get; set; }
 
         //The parent where it came from
         public Vertex<T> Parent { get; set; }
@@ -22,6 +24,7 @@ namespace SubwayMap
         //List of edges connected to this vertex
         public List<Edge<T>> Edges { get; set; }
         public int Layer { get; set; }
+        #endregion
 
         public Vertex(T Name)
         {

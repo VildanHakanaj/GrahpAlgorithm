@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace SubwayMap
 {
-    class SubwayMap<T> : ISubwayMap<T>
+    internal class SubwayMap<T> : ISubwayMap<T>
     {
         #region Variables
         private List<Vertex<T>> Vertecies;
@@ -191,7 +191,7 @@ namespace SubwayMap
                     //check if we have found the vertex
                     if (CurrentVertex.Equals(EndVertex))
                     {
-                        Console.WriteLine("We found the end vertex at layer {0}", CurrentVertex.Layer);
+                        Console.WriteLine("We found the end vertex at layer {0}\n", CurrentVertex.Layer);
                         PrintSPT(CurrentVertex);
                         //Make sure we flag it found so the loop stops
                         found = true;
@@ -433,6 +433,9 @@ namespace SubwayMap
             {
                 Console.Write("[{0}]-->", names.ElementAt(i));
             }
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
+            Console.Clear();
         }
 
         /// <summary>
