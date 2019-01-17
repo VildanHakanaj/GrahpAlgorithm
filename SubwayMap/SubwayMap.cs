@@ -139,7 +139,10 @@ namespace SubwayMap
         #endregion
 
         #region ShortestPath
-
+        ///::::TDODO::::
+        ///[ ] Keep track of the parent color
+        ///[ ] 
+        /// 
         /// <summary>
         /// ShortestPath
         /// 
@@ -177,10 +180,13 @@ namespace SubwayMap
 
                 //Start from layer one
                 StartVertex.Layer = 0;
+                
                 //Visit the start vertex
                 StartVertex.Visited = true;
+                
                 //Place it in the queue
                 queue.Enqueue(StartVertex);
+                
                 //loop through the queue as long as there is items in 
                 //the queue or we have found the 
                 while (queue.Count > 0 || !found)
@@ -191,9 +197,13 @@ namespace SubwayMap
                     //check if we have found the vertex
                     if (CurrentVertex.Equals(EndVertex))
                     {
+
                         Console.WriteLine("We found the end vertex at layer {0}\n", CurrentVertex.Layer);
+
+                        //Print the path
                         PrintSPT(CurrentVertex);
-                        //Make sure we flag it found so the loop stops
+                        
+                        //Make sure we flag as found so the loop stops
                         found = true;
                     }
 
@@ -414,7 +424,7 @@ namespace SubwayMap
         /// <summary>
         /// Is going to be used to print the vertex parents 
         /// </summary>
-        /// <param name="station"></param>
+        /// <param name="station">The end station</param>
 
         private void PrintSPT(Vertex<T> station)
         {
@@ -431,9 +441,9 @@ namespace SubwayMap
 
             for (int i = 0; i < names.Count; i++)
             {
-                Console.Write("[{0}]-->", names.ElementAt(i));
+                Console.Write("[{0}] ===> ", names.ElementAt(i));
             }
-            Console.WriteLine("Press any key to continue...");
+            Console.WriteLine("\nPress any key to continue...");
             Console.ReadKey();
             Console.Clear();
         }
@@ -448,7 +458,6 @@ namespace SubwayMap
         private void PrintSPT(Vertex<T> station, List<T> names)
         {
             names.Add(station.Name);
-
             if (station.Parent != null)
             {
                 PrintSPT(station.Parent, names);
