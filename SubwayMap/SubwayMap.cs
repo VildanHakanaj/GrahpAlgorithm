@@ -87,9 +87,10 @@ namespace SubwayMap
         /// <summary>
         /// Remove Link
         /// 
-        /// Will remove a link between 
-        /// two stations if it only exits 
-        /// 
+        /// Removes the link between 
+        /// two stations if both stations exits 
+        /// and there is a link to remove.
+        ///  
         /// </summary>
         /// <param name="from">From station name</param>
         /// <param name="to">To station name</param>
@@ -277,6 +278,7 @@ namespace SubwayMap
                 if (ArticulationPoints.Contains(Vertecies[i]))
                 {
                     Console.ForegroundColor = ConsoleColor.Yellow;
+                    MessageDisplay(Vertecies[i]+ " ", ConsoleColor.Yellow);
                     Console.WriteLine(Vertecies[i].Name + " Is an articulation Point");
                     Console.ResetColor();
                 }
