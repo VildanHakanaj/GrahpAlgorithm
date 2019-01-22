@@ -1,4 +1,24 @@
-﻿using System;
+﻿/*======================================================================================================================
+|   SubwayMap
+|
+|   Name:           SubwayMap Class
+|
+|   Written by:     Vildan Hakanaj - January 2019
+|
+|   Written for:    COIS 3320 (Prof. Brian Patrick)Assignment 1 - Trent University winter 2019.
+|
+|   Purpose:        Using graphs algorithms to recreate a subwaymap and to be able to insert sations links and utilizing
+|                   BDF and DFS to search the graph and find shortest path and articulation points.
+|
+|
+|   usage:          Used by the menu class to execute the commands
+|
+|   Subroutines/libraries required:
+|                                   System;
+|                                   System Collection Generic 
+|                                   System Linq
+======================================================================================================================*/
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -159,6 +179,7 @@ namespace SubwayMap
             int fromPos, toPos;
             bool found = false;
 
+            //Set the visited to false for each vertex
             for (int i = 0; i < Vertecies.Count; i++)
             {
                 Vertecies[i].Visited = false;
@@ -189,7 +210,7 @@ namespace SubwayMap
 
                 //loop through the queue as long as there is items in 
                 //the queue or we have found the 
-                while (queue.Count > 0 || !found)
+                while (queue.Count > 0 && !found)
                 {
                     //Get the next vertex
                     CurrentVertex = queue.Dequeue();
