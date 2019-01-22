@@ -57,7 +57,7 @@ namespace SubwayMap
         /// <param name="from">Start station</param>
         /// <param name="to">End station</param>
         /// <param name="color">The line color</param>
-        public void InsertLink(T from, T to, string color)
+        public void InsertLink(T from, T to, ConsoleColor color)
         {
             //For the positions
             int fromPos, toPos;
@@ -95,7 +95,7 @@ namespace SubwayMap
         /// <param name="from">From station name</param>
         /// <param name="to">To station name</param>
         /// <param name="color">The line color</param>
-        public void RemoveLink(T from, T to, string color)
+        public void RemoveLink(T from, T to, ConsoleColor color)
         {
 
             int fromPos, toPos, edgePos;
@@ -393,7 +393,7 @@ namespace SubwayMap
                 {
                     for (int j = 0; j < Vertecies[i].Edges.Count; j++)
                     {
-                        Console.WriteLine("[ {0} ] --> [ {1} ] ==> {2}", Vertecies[i].Name, Vertecies[i].Edges[j].AdjStation.Name, Vertecies[i].Edges[j].Colour);
+                        PrintLink(Vertecies[i], j);
                     }
                 }
                 else
@@ -482,6 +482,15 @@ namespace SubwayMap
             Console.WriteLine("Press any key to continue...");
             Console.ReadKey();
             Console.Clear();
+        }
+
+        private void PrintLink(Vertex<T> From, int toPos)
+        {
+            Console.Write("[ {0} ]", From.Name);
+            Console.ForegroundColor = From.Edges[toPos].Colour;
+            Console.Write("---->");
+            Console.ResetColor();
+            Console.WriteLine("[ {0} ]", From.Edges[toPos].AdjStation.Name);
         }
 
         #endregion

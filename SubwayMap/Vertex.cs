@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System;
 
 namespace SubwayMap
 {
@@ -37,7 +38,7 @@ namespace SubwayMap
         /// <param name="StationName">Vertex to be checked against</param>
         /// <returns>{int} i --> if the position of the edge exists</returns>
         /// <returns>{int} -1 --> if the position of the edge doens't exists</returns>
-        public int FindEdge(T StationName, string Colour)
+        public int FindEdge(T StationName, ConsoleColor Colour)
         {
             for (int i = 0; i < Edges.Count; i++)
             {
