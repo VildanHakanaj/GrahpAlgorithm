@@ -127,17 +127,14 @@ namespace SubwayMap
                 {
                     //Display message
                     MessageDisplay("\nThe link between " + Vertecies[fromPos].Name + " and " + Vertecies[toPos].Name + " with color " + color + " doesn't exist\n", ConsoleColor.Red);
-                    Console.WriteLine("Press any key to continue!");
-                    Console.ReadKey();
+                    Wait();
                 }
             }
             else
             {
                 //Display message
                 MessageDisplay("\nOne of the station inputed doesn't exists\n", ConsoleColor.Red);
-
-                Console.WriteLine("Press any key to continue!");
-                Console.ReadKey();
+                Wait();
             }
         }
         #endregion
@@ -233,7 +230,7 @@ namespace SubwayMap
             else
             {
                 MessageDisplay("One of the stations doesn't exists\n", ConsoleColor.Red);
-                return default(Vertex<T>);
+                return null;
             }
 
             return null;
@@ -269,6 +266,12 @@ namespace SubwayMap
 
             // Now ap[] contains articulation points, print them 
             Console.WriteLine();
+            if (ArticulationPoints.Count == 0)
+            {
+                MessageDisplay("There is not articulation point in this graph", ConsoleColor.Red);
+                Wait();
+            }
+
             for (int i = 0; i < size; i++)
             {
                 if (ArticulationPoints.Contains(Vertecies[i]))
@@ -278,7 +281,6 @@ namespace SubwayMap
                     Console.ResetColor();
                 }
             }
-            Console.WriteLine();
         }
 
         /// <summary>
@@ -397,8 +399,7 @@ namespace SubwayMap
                     MessageDisplay("Station " + Vertecies[i].Name + " doesn't have any edges", ConsoleColor.Yellow);
                 }
             }
-            Console.WriteLine("Press any key to continue!");
-            Console.ReadKey();
+            Wait();
 
         }
 
@@ -447,18 +448,12 @@ namespace SubwayMap
                 {
                     Console.Write("[{0}]-->", names.ElementAt(i));
                 }
-                Console.WriteLine("Press any key to continue");
-                Console.ReadKey();
-                Console.Clear();
+                Wait();
             }
             else
             {
-               
-                Console.WriteLine("No path was found");
                 MessageDisplay("No path was found", ConsoleColor.Red);
-                Console.WriteLine("Press any key to continue...");
-                Console.ReadKey();
-                Console.Clear();
+
             }
         }
 
@@ -479,6 +474,13 @@ namespace SubwayMap
             }
         }
         #endregion
+
+        private void Wait()
+        {
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
+            Console.Clear();
+        }
 
         #endregion
     }

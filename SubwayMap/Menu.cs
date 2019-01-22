@@ -102,7 +102,6 @@ namespace SubwayMap
                     break;
                 case "Find the articulation points":
                     map.CriticalPoints();
-                    Wait();
                     break;
                 case "Test1":
                     Test1(map);
