@@ -53,5 +53,17 @@ namespace SubwayMap
             }
             return -1;
         }
+
+        /// <summary>
+        /// Get Adjacent Vertex
+        /// 
+        /// Used to retrive the adjacent vertex
+        /// from the edges list from the given position
+        /// 
+        /// </summary>
+        /// <param name="pos">The position where to find the vertex</param>
+        /// <returns></returns>
+        public Vertex<T> GetAdjacentVertex(int pos) => Edges[pos].AdjStation;
+        
     }
 }

@@ -62,8 +62,8 @@ namespace SubwayMap
             //For the positions
             int fromPos, toPos;
 
-            //Check if the stations dont exits
-            if ((fromPos = FindVertex(from)) > -1 && (Vertecies[fromPos].FindEdge(to, color)) > -1)
+            //Check if the station and the edge already exists
+            if ((fromPos = FindVertex(from)) > -1 && (Vertecies[fromPos].FindEdge(to, color)) == -1)
             {
                 //Get the index of the to vertex
                 toPos = FindVertex(to);
@@ -73,7 +73,6 @@ namespace SubwayMap
             }
             else
             {
-
                 MessageDisplay("The link with color " + color + " from " + from + " to " + to + " already exists\n", ConsoleColor.Red);
                 MessageDisplay(" or one of the station is non existen", ConsoleColor.Red);
             }
