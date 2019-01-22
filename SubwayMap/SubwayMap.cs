@@ -1,30 +1,10 @@
-﻿/*======================================================================================================================
-|   SubwayMap
-|
-|   Name:           SubwayMap Class
-|
-|   Written by:     Vildan Hakanaj - January 2019
-|
-|   Written for:    COIS 3320 (Prof. Brian Patrick)Assignment 1 - Trent University winter 2019.
-|
-|   Purpose:        Using graphs algorithms to recreate a subwaymap and to be able to insert sations links and utilizing
-|                   BDF and DFS to search the graph and find shortest path and articulation points.
-|
-|
-|   usage:          Used by the menu class to execute the commands
-|
-|   Subroutines/libraries required:
-|                                   System;
-|                                   System Collection Generic 
-|                                   System Linq
-======================================================================================================================*/
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace SubwayMap
 {
-    internal class SubwayMap<T> : ISubwayMap<T>
+    class SubwayMap<T> : ISubwayMap<T>
     {
         #region Variables
         private List<Vertex<T>> Vertecies;
@@ -82,21 +62,21 @@ namespace SubwayMap
             //For the positions
             int fromPos, toPos;
 
-            //Check if the station and the edge already exists
+            //Check if the stations dont exits
             if ((fromPos = FindVertex(from)) > -1 && (toPos = FindVertex(to)) > -1)
             {
-                //Get the index of the to vertex
-                if (Vertecies[fromPos].HasEdges() && Vertecies[fromPos].FindEdge(to, color) == -1)
+                //Check if the edge doesn't already exist
+                if (Vertecies[fromPos].FindEdge(to, color) == -1)
                 {
                     //insert the link both ways since its a undirected graph
                     Vertecies[fromPos].Edges.Add(new Edge<T>(Vertecies.ElementAt(toPos), color));
                     Vertecies[toPos].Edges.Add(new Edge<T>(Vertecies.ElementAt(fromPos), color));
                 }
-            }
-            else
-            {
-                MessageDisplay("The link with color " + color + " from " + from + " to " + to + " already exists\n", ConsoleColor.Red);
-                MessageDisplay(" or one of the station is non existen", ConsoleColor.Red);
+                else
+                {
+                    //Print message
+                    MessageDisplay("The link with color " + color + " from " + from + " to " + to + " already exists\n", ConsoleColor.Red);
+                }
             }
         }
 
@@ -159,10 +139,7 @@ namespace SubwayMap
         #endregion
 
         #region ShortestPath
-        ///::::TDODO::::
-        ///[ ] Keep track of the parent color
-        ///[ ] 
-        /// 
+
         /// <summary>
         /// ShortestPath
         /// 
@@ -179,7 +156,6 @@ namespace SubwayMap
             int fromPos, toPos;
             bool found = false;
 
-            //Set the visited to false for each vertex
             for (int i = 0; i < Vertecies.Count; i++)
             {
                 Vertecies[i].Visited = false;
@@ -201,16 +177,13 @@ namespace SubwayMap
 
                 //Start from layer one
                 StartVertex.Layer = 0;
-
                 //Visit the start vertex
                 StartVertex.Visited = true;
-
                 //Place it in the queue
                 queue.Enqueue(StartVertex);
-
                 //loop through the queue as long as there is items in 
                 //the queue or we have found the 
-                while (queue.Count > 0 && !found)
+                while (queue.Count > 0 || !found)
                 {
                     //Get the next vertex
                     CurrentVertex = queue.Dequeue();
@@ -218,13 +191,9 @@ namespace SubwayMap
                     //check if we have found the vertex
                     if (CurrentVertex.Equals(EndVertex))
                     {
-
-                        Console.WriteLine("We found the end vertex at layer {0}\n", CurrentVertex.Layer);
-
-                        //Print the path
+                        Console.WriteLine("We found the end vertex at layer {0}", CurrentVertex.Layer);
                         PrintSPT(CurrentVertex);
-
-                        //Make sure we flag as found so the loop stops
+                        //Make sure we flag it found so the loop stops
                         found = true;
                     }
 
@@ -328,10 +297,8 @@ namespace SubwayMap
             // Go through all vertices adjacent to this 
             for (int i = 0; i < CurrentVertex.Edges.Count; i++)
             {
-                //Get the adjacent vertex of the current vertex
-                Vertex<T> AdjVertex = CurrentVertex.Edges[i].AdjStation;
-
-                // If AdjVertex is not visited yet, then make it a child of current vertex in DFS tree and recur for it 
+                Vertex<T> AdjVertex = CurrentVertex.Edges[i].AdjStation;  // v is next adjacent of CurrentVertex 
+                                                                          // If AdjVertex is not visited yet, then make it a child of current vertex in DFS tree and recur for it 
                 if (!AdjVertex.Visited)
                 {
                     children++;
@@ -353,8 +320,8 @@ namespace SubwayMap
                         ArticulationPoints.Add(CurrentVertex);
                     }
 
-                    // (2) If Current vertex is not root and low link value of one of its child 
-                    // is more than discovery value of Current vertex.  
+                    // (2) If u is not root and low value of one of its child 
+                    // is more than discovery value of u.  
                     if (CurrentVertex.Parent != null && AdjVertex.LowLink >= CurrentVertex.Discovered)
                     {
                         ArticulationPoints.Add(CurrentVertex);
@@ -362,7 +329,7 @@ namespace SubwayMap
                 }
                 else if (AdjVertex != CurrentVertex.Parent)
                 {
-                    // Update low value of CurrentVertex for parent function calls. 
+                    // Update low value of u for parent function calls. 
                     CurrentVertex.LowLink = Math.Min(CurrentVertex.LowLink, AdjVertex.Discovered);
                 }
             }
@@ -394,7 +361,6 @@ namespace SubwayMap
             return -1;
         }
 
-        #region Print Methods
 
         /// <summary>
         /// Print Graph 
@@ -423,6 +389,9 @@ namespace SubwayMap
                     MessageDisplay("Station " + Vertecies[i].Name + " doesn't have any edges", ConsoleColor.Yellow);
                 }
             }
+            Console.WriteLine("Press any key to continue!");
+            Console.ReadKey();
+
         }
 
         /// <summary>
@@ -440,12 +409,13 @@ namespace SubwayMap
             Console.WriteLine(message);
             Console.ResetColor();
         }
-
+        #region Print Route Path
 
         /// <summary>
         /// Is going to be used to print the vertex parents 
         /// </summary>
-        /// <param name="station">The end station</param>
+        /// <param name="station"></param>
+
         private void PrintSPT(Vertex<T> station)
         {
             //Create a list for the to be stored
@@ -461,11 +431,8 @@ namespace SubwayMap
 
             for (int i = 0; i < names.Count; i++)
             {
-                Console.Write("[{0}] ===> ", names.ElementAt(i));
+                Console.Write("[{0}]-->", names.ElementAt(i));
             }
-            Console.WriteLine("\nPress any key to continue...");
-            Console.ReadKey();
-            Console.Clear();
         }
 
         /// <summary>
@@ -478,6 +445,7 @@ namespace SubwayMap
         private void PrintSPT(Vertex<T> station, List<T> names)
         {
             names.Add(station.Name);
+
             if (station.Parent != null)
             {
                 PrintSPT(station.Parent, names);

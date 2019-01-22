@@ -1,5 +1,4 @@
-﻿using System;
-namespace SubwayMap
+﻿namespace SubwayMap
 {
     class Edge<T>
     {

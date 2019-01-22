@@ -4,19 +4,17 @@ namespace SubwayMap
 {
     class Vertex<T>
     {
-        #region Data Fields
-
-        //The name of the vertex
+         //The name of the vertex
         public T Name { get; set; }
 
         //IsVisited Flag
         public bool Visited { get; set; }
 
         //Time when it was discovered
-        public int Discovered { get; set; }
+        public int Discovered{ get; set; }
 
         //The lowest back edge 
-        public int LowLink { get; set; }
+        public int LowLink{ get; set; }
 
         //The parent where it came from
         public Vertex<T> Parent { get; set; }
@@ -24,9 +22,7 @@ namespace SubwayMap
         //List of edges connected to this vertex
         public List<Edge<T>> Edges { get; set; }
         public int Layer { get; set; }
-        #endregion
 
-        //Constructor
         public Vertex(T Name)
         {
             this.Name = Name;
@@ -76,6 +72,5 @@ namespace SubwayMap
         /// <returns> { false } if it doesn't have any edges </returns>
         public bool HasEdges() => Edges.Count > 0;
 
-        
     }
 }
