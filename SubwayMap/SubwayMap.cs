@@ -202,31 +202,31 @@ namespace SubwayMap
                     }
 
                     //Add other vertecies only if we haven't found what we are looking for
-                    if (!found)
+                    //if (!found)
+                    //{
+
+                    //Add all the adjacent vertecies
+                    for (int i = 0; i < CurrentVertex.Edges.Count; i++)
                     {
 
-                        //Add all the adjacent vertecies
-                        for (int i = 0; i < CurrentVertex.Edges.Count; i++)
+                        //Check if the vertex hasnt been visited before
+                        if (!CurrentVertex.Edges[i].AdjStation.Visited)
                         {
 
-                            //Check if the vertex hasnt been visited before
-                            if (!CurrentVertex.Edges[i].AdjStation.Visited)
-                            {
+                            //Set the parent
+                            CurrentVertex.GetAdjacentVertex(i).Parent = CurrentVertex;
 
-                                //Set the parent
-                                CurrentVertex.GetAdjacentVertex(i).Parent = CurrentVertex;
+                            //Change the layer
+                            CurrentVertex.Edges[i].AdjStation.Layer = CurrentVertex.Layer++;
 
-                                //Change the layer
-                                CurrentVertex.Edges[i].AdjStation.Layer = CurrentVertex.Layer++;
+                            //Set the status to visited 
+                            CurrentVertex.Edges[i].AdjStation.Visited = true;
 
-                                //Set the status to visited 
-                                CurrentVertex.Edges[i].AdjStation.Visited = true;
-
-                                //Enqueue the vertex
-                                queue.Enqueue(CurrentVertex.Edges[i].AdjStation);
-                            }
+                            //Enqueue the vertex
+                            queue.Enqueue(CurrentVertex.Edges[i].AdjStation);
                         }
                     }
+                    //}
 
                 }
             }
@@ -428,13 +428,13 @@ namespace SubwayMap
         public void PrintSPT(T from, T to)
         {
             Vertex<T> station = ShortestPath(from, to);
+
             //Create a list for the to be stored
             List<T> names = new List<T>();
             //Call the recursive method passing the station name
-            PrintSPT(station, names);
-
-            if (names.Count > 0)
+            if (station != null)
             {
+                PrintSPT(station, names);
 
                 //Reverse the order of the stations
                 names.Reverse();
@@ -447,15 +447,19 @@ namespace SubwayMap
                 {
                     Console.Write("[{0}]-->", names.ElementAt(i));
                 }
-
+                Console.WriteLine("Press any key to continue");
+                Console.ReadKey();
+                Console.Clear();
             }
             else
             {
-                MessageDisplay("There isn't a path from " + station.Name, ConsoleColor.Red);
+               
+                Console.WriteLine("No path was found");
+                MessageDisplay("No path was found", ConsoleColor.Red);
+                Console.WriteLine("Press any key to continue...");
+                Console.ReadKey();
+                Console.Clear();
             }
-            Console.WriteLine("Press any key to continue");
-            Console.ReadKey();
-            Console.Clear();
         }
 
         /// <summary>
