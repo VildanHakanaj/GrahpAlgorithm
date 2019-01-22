@@ -1,4 +1,24 @@
-﻿using System;
+﻿/*======================================================================================================================
+|   SubwayMap
+|
+|   Name:           Main Class
+|
+|   Written by:     Vildan Hakanaj - January 2019
+|
+|   Written for:    COIS 3320 (Prof. Brian Patrick)Assignment 1 - Trent University winter 2019.
+|
+|   Purpose:        Using graphs algorithms to recreate a subwaymap and to be able to insert sations links and utilizing
+|                   BDF and DFS to search the graph and find shortest path and articulation points.
+|
+|
+|   usage:          Runt the main class.
+|
+|   Subroutines/libraries required:
+|                                  System;
+|                                  System Collection Generic 
+|
+======================================================================================================================*/
+using System;
 using System.Collections.Generic;
 
 namespace SubwayMap
@@ -84,116 +104,16 @@ namespace SubwayMap
             switch (selection)
             {
                 case "Add Station":
-                    char station;
-                    Console.Write("Enter a name for the station ==> ");
-                    if (char.TryParse(Console.ReadLine(), out station))
-                    {
-                        Console.Clear();
-                        map.InsertStation(station);
-                        Wait();
-                    }
-                    else
-                    {
-                        ChangeColor(ConsoleColor.Red);
-                        Console.WriteLine("\nInvalid input! Needs to be a character\n");
-                        Console.ResetColor();
-                    }
+                    AddStation();
                     break;
-
                 case "Add Link":
-                    char from = ' ', to = ' ';
-                    string color = " ";
-                    bool error = false;
-                    do
-                    {
-                        if (error)
-                        {
-                            error = false;
-                            ChangeColor(ConsoleColor.Red);
-                            Console.WriteLine("Please make sure to enter a character for from and to and a string for color");
-                            Wait();
-                        }
-
-                        Console.Write("\nEnter a starting station: ");
-                        if (char.TryParse(Console.ReadLine(), out from))
-                        {
-                            Console.Write("\nEnd a end station to : ");
-                            if (char.TryParse(Console.ReadLine(), out to))
-                            {
-                                Console.Write("\nEnter a color for the line: ");
-                                color = Console.ReadLine();
-                            }
-                            else
-                            {
-                                error = true;
-                            }
-                        }
-                        else
-                        {
-                            error = true;
-                        }
-                    } while (error == true);
-
-
-                    map.InsertLink(from, to, color);
-                    Wait();
+                    AddLink();
                     break;
                 case "Remove Link":
-                    Console.Write("Enter the starting point of the link: ");
-                    char fromStation = ' ';
-                    char toStation = ' ';
-                    error = false;
-                    if (char.TryParse(Console.ReadLine(), out fromStation))
-                    {
-                        Console.Write("Enter the to station: ");
-
-                        if (char.TryParse(Console.ReadLine(), out toStation))
-                        {
-                            Console.Write("Enter the color of the link: ");
-                            color = Console.ReadLine();
-                            map.RemoveLink(fromStation, toStation, color);
-                        }
-                        else
-                        {
-                            error = true;
-                            ChangeColor(ConsoleColor.Red);
-                            Console.WriteLine("Invalid input please enter a character");
-                        }
-                    }
-                    else
-                    {
-                        ChangeColor(ConsoleColor.Red);
-                        error = true;
-                        Console.WriteLine("Invalid input please enter a character");
-                    }
+                    RemoveLink();
                     break;
                 case "Find shortest path between two stations":
-                    fromStation = ' ';
-                    toStation = ' ';
-                    error = false;
-
-                    Console.Write("Enter the the starting station: ");
-                    if (char.TryParse(Console.ReadLine(), out fromStation))
-                    {
-                        Console.Write("Enter the endstation: ");
-
-                        if (char.TryParse(Console.ReadLine(), out toStation))
-                        {
-                            map.ShortestPath(fromStation, toStation);
-                        }
-                        else
-                        {
-                            error = true;
-                            ChangeColor(ConsoleColor.Red);
-                            Console.WriteLine("Invalid input please enter a character");
-                        }
-                    }
-                    else
-                    {
-                        ChangeColor(ConsoleColor.Red);
-                        error = true;
-                        Console.WriteLine("Invalid input please enter a character");
-                    }
+                    FindShortestPath();
                     break;
                 case "Print the Graph":
                     Console.Clear();
@@ -289,6 +209,12 @@ namespace SubwayMap
             Console.WriteLine("Press enter to continue...");
             Console.ReadKey();
             Console.Clear();
+        }
+
+        private void ErrorMessage()
+        {
+            ChangeColor(ConsoleColor.Red);
+            Console.WriteLine("Invalid input please enter a character");
         }
         #endregion
 
@@ -481,6 +407,135 @@ namespace SubwayMap
             map.InsertLink('D', 'E', "red");
             map.InsertLink('E', 'F', "red");
             map.InsertLink('C', 'F', "red");
+        }
+        #endregion
+
+        #region Options
+        private void AddStation()
+        {
+            char station;
+            Console.Write("Enter a name for the station ==> ");
+            if (char.TryParse(Console.ReadLine(), out station))
+            {
+                Console.Clear();
+                map.InsertStation(station);
+                Wait();
+            }
+            else
+            {
+                ChangeColor(ConsoleColor.Red);
+                Console.WriteLine("\nInvalid input! Needs to be a character\n");
+                Console.ResetColor();
+            }
+        }
+
+        private void AddLink()
+        {
+            char from = ' ', to = ' ';
+            string color = " ";
+            bool error = false;
+
+            do
+            {
+                //Check if there is any errors
+                if (error)
+                {
+                    error = false;
+                    //Print the error
+                    ErrorMessage();
+                    //Wait for user to press something
+                    Wait();
+                }
+
+                Console.Write("\nEnter a starting station: ");
+                if (char.TryParse(Console.ReadLine(), out from))
+                {
+                    Console.Write("\nEnd a end station to : ");
+                    if (char.TryParse(Console.ReadLine(), out to))
+                    {
+                        Console.Write("\nEnter a color for the line: ");
+                        color = Console.ReadLine();
+                    }
+                    else
+                    {
+                        //Print error message
+                        error = true;
+                        ErrorMessage();
+                    }
+                }
+                else
+                {
+                    //Print error message
+                    error = true;
+                    ErrorMessage();
+                }
+                //Do until there is not error
+            } while (error == true);
+            //Insert the link between two station
+            map.InsertLink(from, to, color);
+            //Wait for user to press any key
+            Wait();
+        }
+
+        private void RemoveLink()
+        {
+            //Link input
+            string color = " ";
+            char fromStation = ' ';
+            char toStation = ' ';
+
+            Console.Write("Enter the starting point of the link: ");
+            //Check if the user has entered a correct character 
+            if (char.TryParse(Console.ReadLine(), out fromStation))
+            {
+                Console.Write("Enter the to station: ");
+                //Check if the user has entered a correct character
+                if (char.TryParse(Console.ReadLine(), out toStation))
+                {
+                    Console.Write("Enter the color of the link: ");
+                    color = Console.ReadLine();
+                    //Try and remove link
+                    map.RemoveLink(fromStation, toStation, color);
+                }
+                else
+                {
+                    ErrorMessage();
+                }
+            }
+            else
+            {
+                ErrorMessage();
+            }
+        }
+
+        private void FindShortestPath()
+        {
+            char fromStation = ' ';
+            char toStation = ' ';
+
+            Console.Write("Enter the the starting station: ");
+            //Check input format
+            if (char.TryParse(Console.ReadLine(), out fromStation))
+            {
+                Console.Write("Enter the endstation: ");
+
+                //Check input format
+                if (char.TryParse(Console.ReadLine(), out toStation))
+                {
+                    //Run the shortestpath algo
+                    map.ShortestPath(fromStation, toStation);
+                }
+                else
+                {
+                    //Print error
+                    ErrorMessage();
+                }
+            }
+            else
+            {
+                //Print Error
+                ErrorMessage();
+            }
         }
         #endregion
     }

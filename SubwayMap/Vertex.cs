@@ -26,6 +26,7 @@ namespace SubwayMap
         public int Layer { get; set; }
         #endregion
 
+        //Constructor
         public Vertex(T Name)
         {
             this.Name = Name;
@@ -75,5 +76,6 @@ namespace SubwayMap
         /// <returns> { false } if it doesn't have any edges </returns>
         public bool HasEdges() => Edges.Count > 0;
 
+        
     }
 }
