@@ -433,6 +433,10 @@ namespace SubwayMap
             {
                 Console.Write("[{0}]-->", names.ElementAt(i));
             }
+
+            Console.WriteLine("Press any key to continue");
+            Console.ReadKey();
+            Console.Clear();
         }
 
         /// <summary>
