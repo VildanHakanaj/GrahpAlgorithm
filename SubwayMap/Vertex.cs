@@ -64,6 +64,18 @@ namespace SubwayMap
         /// <param name="pos">The position where to find the vertex</param>
         /// <returns></returns>
         public Vertex<T> GetAdjacentVertex(int pos) => Edges[pos].AdjStation;
+
+        /// <summary>
+        /// Has edges
+        /// 
+        /// Check if the vertex has any edges.
+        /// 
+        /// 
+        /// </summary>
+        /// <returns> { true } if it has any edges </returns>
+        /// <returns> { false } if it doesn't have any edges </returns>
+        public bool HasEdges() => Edges.Count > 0;
+
         
     }
 }

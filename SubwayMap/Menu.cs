@@ -413,9 +413,8 @@ namespace SubwayMap
         #region Options
         private void AddStation()
         {
-            char station;
             Console.Write("Enter a name for the station ==> ");
-            if (char.TryParse(Console.ReadLine(), out station))
+            if (char.TryParse(Console.ReadLine(), out char station))
             {
                 Console.Clear();
                 map.InsertStation(station);
@@ -481,16 +480,13 @@ namespace SubwayMap
         {
             //Link input
             string color = " ";
-            char fromStation = ' ';
-            char toStation = ' ';
-
             Console.Write("Enter the starting point of the link: ");
             //Check if the user has entered a correct character 
-            if (char.TryParse(Console.ReadLine(), out fromStation))
+            if (char.TryParse(Console.ReadLine(), out char fromStation))
             {
                 Console.Write("Enter the to station: ");
                 //Check if the user has entered a correct character
-                if (char.TryParse(Console.ReadLine(), out toStation))
+                if (char.TryParse(Console.ReadLine(), out char toStation))
                 {
                     Console.Write("Enter the color of the link: ");
                     color = Console.ReadLine();
@@ -510,17 +506,14 @@ namespace SubwayMap
 
         private void FindShortestPath()
         {
-            char fromStation = ' ';
-            char toStation = ' ';
-
             Console.Write("Enter the the starting station: ");
             //Check input format
-            if (char.TryParse(Console.ReadLine(), out fromStation))
+            if (char.TryParse(Console.ReadLine(), out char fromStation))
             {
                 Console.Write("Enter the endstation: ");
 
                 //Check input format
-                if (char.TryParse(Console.ReadLine(), out toStation))
+                if (char.TryParse(Console.ReadLine(), out char toStation))
                 {
                     //Run the shortestpath algo
                     map.ShortestPath(fromStation, toStation);

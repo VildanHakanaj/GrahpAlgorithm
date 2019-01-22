@@ -63,13 +63,15 @@ namespace SubwayMap
             int fromPos, toPos;
 
             //Check if the station and the edge already exists
-            if ((fromPos = FindVertex(from)) > -1 && (Vertecies[fromPos].FindEdge(to, color)) == -1)
+            if ((fromPos = FindVertex(from)) > -1 && (toPos = FindVertex(to)) > -1)
             {
                 //Get the index of the to vertex
-                toPos = FindVertex(to);
-                //insert the link both ways since its a undirected graph
-                Vertecies[fromPos].Edges.Add(new Edge<T>(Vertecies.ElementAt(toPos), color));
-                Vertecies[toPos].Edges.Add(new Edge<T>(Vertecies.ElementAt(fromPos), color));
+                if (Vertecies[fromPos].HasEdges() && Vertecies[fromPos].FindEdge(to, color) == -1)
+                {
+                    //insert the link both ways since its a undirected graph
+                    Vertecies[fromPos].Edges.Add(new Edge<T>(Vertecies.ElementAt(toPos), color));
+                    Vertecies[toPos].Edges.Add(new Edge<T>(Vertecies.ElementAt(fromPos), color));
+                }
             }
             else
             {
@@ -306,7 +308,7 @@ namespace SubwayMap
             for (int i = 0; i < CurrentVertex.Edges.Count; i++)
             {
                 //Get the adjacent vertex of the current vertex
-                Vertex<T> AdjVertex = CurrentVertex.Edges[i].AdjStation;  
+                Vertex<T> AdjVertex = CurrentVertex.Edges[i].AdjStation;
 
                 // If AdjVertex is not visited yet, then make it a child of current vertex in DFS tree and recur for it 
                 if (!AdjVertex.Visited)
@@ -423,7 +425,6 @@ namespace SubwayMap
         /// Is going to be used to print the vertex parents 
         /// </summary>
         /// <param name="station">The end station</param>
-
         private void PrintSPT(Vertex<T> station)
         {
             //Create a list for the to be stored
