@@ -78,6 +78,10 @@ namespace SubwayMap
                     MessageDisplay("The link with color " + color + " from " + from + " to " + to + " already exists\n", ConsoleColor.Red);
                 }
             }
+            else
+            {
+                MessageDisplay("One of the station doesn't exits", ConsoleColor.Red);
+            }
         }
 
         /// <summary>
@@ -99,7 +103,7 @@ namespace SubwayMap
             //Find if the vertecies exists
             if ((fromPos = FindVertex(from)) > -1 && (toPos = FindVertex(to)) > -1)
             {
-                //Get the vertecies for readability
+                //Get the vertecies
                 FromVertex = Vertecies[fromPos];
                 ToVertex = Vertecies[toPos];
 
@@ -150,7 +154,7 @@ namespace SubwayMap
         /// </summary>
         /// <param name="from">The starting vertex</param>
         /// <param name="to">The end vertex</param>
-        public void ShortestPath(T from, T to)
+        public Vertex<T> ShortestPath(T from, T to)
         {
             Queue<Vertex<T>> queue = new Queue<Vertex<T>>();
             int fromPos, toPos;
@@ -159,6 +163,7 @@ namespace SubwayMap
             for (int i = 0; i < Vertecies.Count; i++)
             {
                 Vertecies[i].Visited = false;
+                Vertecies[i].Parent = null;
             }
 
             //Check if the both of the stations exists
@@ -183,7 +188,7 @@ namespace SubwayMap
                 queue.Enqueue(StartVertex);
                 //loop through the queue as long as there is items in 
                 //the queue or we have found the 
-                while (queue.Count > 0 || !found)
+                while (queue.Count > 0 && !found)
                 {
                     //Get the next vertex
                     CurrentVertex = queue.Dequeue();
@@ -191,10 +196,9 @@ namespace SubwayMap
                     //check if we have found the vertex
                     if (CurrentVertex.Equals(EndVertex))
                     {
-                        Console.WriteLine("We found the end vertex at layer {0}", CurrentVertex.Layer);
-                        PrintSPT(CurrentVertex);
-                        //Make sure we flag it found so the loop stops
                         found = true;
+                        return CurrentVertex;
+                        //Make sure we flag it found so the loop stops
                     }
 
                     //Add other vertecies only if we haven't found what we are looking for
@@ -223,12 +227,16 @@ namespace SubwayMap
                             }
                         }
                     }
+
                 }
             }
             else
             {
                 MessageDisplay("One of the stations doesn't exists\n", ConsoleColor.Red);
+                return default(Vertex<T>);
             }
+
+            return null;
         }
         #endregion
 
@@ -409,31 +417,42 @@ namespace SubwayMap
             Console.WriteLine(message);
             Console.ResetColor();
         }
-        #region Print Route Path
+
+        #region Print Shortes Path
 
         /// <summary>
         /// Is going to be used to print the vertex parents 
         /// </summary>
         /// <param name="station"></param>
 
-        private void PrintSPT(Vertex<T> station)
+        public void PrintSPT(T from, T to)
         {
+            Vertex<T> station = ShortestPath(from, to);
             //Create a list for the to be stored
             List<T> names = new List<T>();
             //Call the recursive method passing the station name
             PrintSPT(station, names);
-            //Reverse the order of the stations
-            names.Reverse();
 
-            Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine("The shortest path to station [ {0} ] from station [ {1} ] is: \n", names[0], names[names.Count - 1]);
-            Console.ResetColor();
-
-            for (int i = 0; i < names.Count; i++)
+            if (names.Count > 0)
             {
-                Console.Write("[{0}]-->", names.ElementAt(i));
-            }
 
+                //Reverse the order of the stations
+                names.Reverse();
+
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine("\nThe shortest path from station [ {0} ] to station [ {1} ] is: \n", names[0], names[names.Count - 1]);
+                Console.ResetColor();
+
+                for (int i = 0; i < names.Count; i++)
+                {
+                    Console.Write("[{0}]-->", names.ElementAt(i));
+                }
+
+            }
+            else
+            {
+                MessageDisplay("There isn't a path from " + station.Name, ConsoleColor.Red);
+            }
             Console.WriteLine("Press any key to continue");
             Console.ReadKey();
             Console.Clear();
@@ -456,6 +475,7 @@ namespace SubwayMap
             }
         }
         #endregion
+
         #endregion
     }
 }

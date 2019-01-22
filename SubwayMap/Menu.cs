@@ -86,7 +86,6 @@ namespace SubwayMap
                 case "Add Station":
                     AddStation();
                     break;
-
                 case "Add Link":
                     AddLink();
                     break;
@@ -258,7 +257,6 @@ namespace SubwayMap
             {
                 Console.Clear();
                 map.InsertStation(station);
-                Wait();
             }
             else
             {
@@ -281,7 +279,7 @@ namespace SubwayMap
                 char toStation = ' ';
                 if (char.TryParse(Console.ReadLine(), out toStation))
                 {
-                    map.ShortestPath(fromStation, toStation);
+                    map.PrintSPT(fromStation, toStation);
                 }
                 else
                 {
