@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SubwayMap
 {
-    class Menu
+    class Menu : IMenu
     {
         #region Variable Declaration
         private string selection;
@@ -48,7 +48,7 @@ namespace SubwayMap
 
             }
         }
-        private bool DetectKey()
+        public bool DetectKey()
         {
             ConsoleKeyInfo ckey = Console.ReadKey();
             if (ckey.Key == ConsoleKey.DownArrow)
@@ -79,121 +79,22 @@ namespace SubwayMap
             }
             return false;
         }
-        private void ExecuteSelection(string selection, SubwayMap<char> map)
+        public void ExecuteSelection(string selection, SubwayMap<char> map)
         {
             switch (selection)
             {
                 case "Add Station":
-                    char station;
-                    Console.Write("Enter a name for the station ==> ");
-                    if (char.TryParse(Console.ReadLine(), out station))
-                    {
-                        Console.Clear();
-                        map.InsertStation(station);
-                        Wait();
-                    }
-                    else
-                    {
-                        ChangeColor(ConsoleColor.Red);
-                        Console.WriteLine("\nInvalid input! Needs to be a character\n");
-                        Console.ResetColor();
-                    }
+                    AddStation();
                     break;
 
                 case "Add Link":
-                    char from = ' ', to = ' ';
-                    string color = " ";
-                    bool error = false;
-                    do
-                    {
-                        if (error)
-                        {
-                            error = false;
-                            ChangeColor(ConsoleColor.Red);
-                            Console.WriteLine("Please make sure to enter a character for from and to and a string for color");
-                            Wait();
-                        }
-
-                        Console.Write("\nEnter a starting station: ");
-                        if (char.TryParse(Console.ReadLine(), out from))
-                        {
-                            Console.Write("\nEnd a end station to : ");
-                            if (char.TryParse(Console.ReadLine(), out to))
-                            {
-                                Console.Write("\nEnter a color for the line: ");
-                                color = Console.ReadLine();
-                            }
-                            else
-                            {
-                                error = true;
-                            }
-                        }
-                        else
-                        {
-                            error = true;
-                        }
-                    } while (error == true);
-
-
-                    map.InsertLink(from, to, color);
-                    Wait();
+                    AddLink();
                     break;
                 case "Remove Link":
-                    Console.Write("Enter the starting point of the link: ");
-                    char fromStation = ' ';
-                    char toStation = ' ';
-                    error = false;
-                    if (char.TryParse(Console.ReadLine(), out fromStation))
-                    {
-                        Console.Write("Enter the to station: ");
-
-                        if (char.TryParse(Console.ReadLine(), out toStation))
-                        {
-                            Console.Write("Enter the color of the link: ");
-                            color = Console.ReadLine();
-                            map.RemoveLink(fromStation, toStation, color);
-                        }
-                        else
-                        {
-                            error = true;
-                            ChangeColor(ConsoleColor.Red);
-                            Console.WriteLine("Invalid input please enter a character");
-                        }
-                    }
-                    else
-                    {
-                        ChangeColor(ConsoleColor.Red);
-                        error = true;
-                        Console.WriteLine("Invalid input please enter a character");
-                    }
+                    RemoveLink();
                     break;
                 case "Find shortest path between two stations":
-                    fromStation = ' ';
-                    toStation = ' ';
-                    error = false;
-
-                    Console.Write("Enter the the starting station: ");
-                    if (char.TryParse(Console.ReadLine(), out fromStation))
-                    {
-                        Console.Write("Enter the endstation: ");
-
-                        if (char.TryParse(Console.ReadLine(), out toStation))
-                        {
-                            map.ShortestPath(fromStation, toStation);
-                        }
-                        else
-                        {
-                            error = true;
-                            ChangeColor(ConsoleColor.Red);
-                            Console.WriteLine("Invalid input please enter a character");
-                        }
-                    }
-                    else
-                    {
-                        ChangeColor(ConsoleColor.Red);
-                        error = true;
-                        Console.WriteLine("Invalid input please enter a character");
-                    }
+                    ShortestPath();
                     break;
                 case "Print the Graph":
                     Console.Clear();
@@ -249,7 +150,7 @@ namespace SubwayMap
                     break;
             }
         }
-        private string SelectMenu()
+        public string SelectMenu()
         {
             Console.CursorVisible = false;
             for (int i = 0; i < menuItemsss.Count; i++)
@@ -276,6 +177,126 @@ namespace SubwayMap
             return "";
         }
 
+        #endregion
+
+        #region Options
+        public void AddLink()
+        {
+            char from = ' ', to = ' ';
+            string color = " ";
+            bool error = false;
+            do
+            {
+                if (error)
+                {
+                    error = false;
+                    ChangeColor(ConsoleColor.Red);
+                    Console.WriteLine("Please make sure to enter a character for from and to and a string for color");
+                    Wait();
+                }
+
+                Console.Write("\nEnter a starting station: ");
+                if (char.TryParse(Console.ReadLine(), out from))
+                {
+                    Console.Write("\nEnd a end station to : ");
+                    if (char.TryParse(Console.ReadLine(), out to))
+                    {
+                        Console.Write("\nEnter a color for the line: ");
+                        color = Console.ReadLine();
+                    }
+                    else
+                    {
+                        error = true;
+                    }
+                }
+                else
+                {
+                    error = true;
+                }
+            } while (error == true);
+
+
+            map.InsertLink(from, to, color);
+            Wait();
+        }
+
+        public void RemoveLink()
+        {
+            Console.Write("Enter the starting point of the link: ");
+            char fromStation = ' ';
+            char toStation = ' ';
+            bool error = false;
+            if (char.TryParse(Console.ReadLine(), out fromStation))
+            {
+                Console.Write("Enter the to station: ");
+
+                if (char.TryParse(Console.ReadLine(), out toStation))
+                {
+                    Console.Write("Enter the color of the link: ");
+                    string color = Console.ReadLine();
+                    map.RemoveLink(fromStation, toStation, color);
+                }
+                else
+                {
+                    error = true;
+                    ChangeColor(ConsoleColor.Red);
+                    Console.WriteLine("Invalid input please enter a character");
+                }
+            }
+            else
+            {
+                ChangeColor(ConsoleColor.Red);
+                error = true;
+                Console.WriteLine("Invalid input please enter a character");
+            }
+        }
+
+        public void AddStation()
+        {
+            Console.Write("Enter a name for the station ==> ");
+            if (char.TryParse(Console.ReadLine(), out char station))
+            {
+                Console.Clear();
+                map.InsertStation(station);
+                Wait();
+            }
+            else
+            {
+                ChangeColor(ConsoleColor.Red);
+                Console.WriteLine("\nInvalid input! Needs to be a character\n");
+                Console.ResetColor();
+            }
+        }
+
+        public void ShortestPath()
+        {
+            Console.Write("Enter the the starting station: ");
+#pragma warning disable CS0219 // Variable is assigned but its value is never used
+            bool error = false;
+#pragma warning restore CS0219 // Variable is assigned but its value is never used
+            if (char.TryParse(Console.ReadLine(), out char fromStation))
+            {
+                Console.Write("Enter the endstation: ");
+
+                char toStation = ' ';
+                if (char.TryParse(Console.ReadLine(), out toStation))
+                {
+                    map.ShortestPath(fromStation, toStation);
+                }
+                else
+                {
+                    error = true;
+                    ChangeColor(ConsoleColor.Red);
+                    Console.WriteLine("Invalid input please enter a character");
+                }
+            }
+            else
+            {
+                ChangeColor(ConsoleColor.Red);
+                error = true;
+                Console.WriteLine("Invalid input please enter a character");
+            }
+        }
         #endregion
 
         #region HelperMethods

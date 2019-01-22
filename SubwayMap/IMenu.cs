@@ -1,7 +1,7 @@
 ﻿
 namespace SubwayMap
 {
-    interface IMenu
+    interface IMenu : IOptions
     {
         void ShowMenu();
         bool DetectKey();
