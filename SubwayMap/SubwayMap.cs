@@ -277,10 +277,7 @@ namespace SubwayMap
             {
                 if (ArticulationPoints.Contains(Vertecies[i]))
                 {
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    MessageDisplay(Vertecies[i]+ " ", ConsoleColor.Yellow);
-                    Console.WriteLine(Vertecies[i].Name + " Is an articulation Point");
-                    Console.ResetColor();
+                    MessageDisplay(Vertecies[i].Name + " Is an articulation point", ConsoleColor.Yellow);
                 }
             }
         }
@@ -421,7 +418,7 @@ namespace SubwayMap
             Console.ResetColor();
         }
 
-        #region Print Shortes Path
+        #region Printing Methods
 
         /// <summary>
         /// Is going to be used to print the vertex parents 
@@ -475,15 +472,12 @@ namespace SubwayMap
                 PrintSPT(station.Parent, names);
             }
         }
-        #endregion
-
-        private void Wait()
-        {
-            Console.WriteLine("Press any key to continue...");
-            Console.ReadKey();
-            Console.Clear();
-        }
-
+        
+        /// <summary>
+        /// Helper method to print out the link between two stations
+        /// </summary>
+        /// <param name="From">The station to start from</param>
+        /// <param name="toPos">the position of the edge in the edges list</param>
         private void PrintLink(Vertex<T> From, int toPos)
         {
             Console.Write("[ {0} ]", From.Name);
@@ -491,6 +485,18 @@ namespace SubwayMap
             Console.Write("---->");
             Console.ResetColor();
             Console.WriteLine("[ {0} ]", From.Edges[toPos].AdjStation.Name);
+        }
+        #endregion
+
+
+        /// <summary>
+        /// Helper function to make the user wait and press any key to continue
+        /// </summary>
+        private void Wait()
+        {
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
+            Console.Clear();
         }
 
         #endregion

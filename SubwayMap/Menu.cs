@@ -23,9 +23,10 @@ namespace SubwayMap
                 /*[11]*/"Test5",
                 /*[12]*/"Test6",
                 /*[13]*/"Test7",
-                /*[14]*/"TestSPT",
-                /*[15]*/"Clear Graph",
-                /*[16]*/"Exit",
+                /*[14]*/"Root test",
+                /*[15]*/"TestSPT",
+                /*[16]*/"Clear Graph",
+                /*[17]*/"Exit",
             };
         #endregion
 
@@ -129,6 +130,10 @@ namespace SubwayMap
                     break;
                 case "Test7":
                     Test7(map);
+                    Wait();
+                    break;
+                case "Root test":
+                    RootTest(map);
                     Wait();
                     break;
                 case "TestSPT":
@@ -485,6 +490,15 @@ namespace SubwayMap
 
             Console.WriteLine("\nThe graph is populated with Test 5 sample\n\n");
             map.PrintGraph();
+        }
+
+        public void RootTest(SubwayMap<char> map)
+        {
+            map.InsertStation('A');
+            map.InsertStation('B');
+            map.InsertStation('C');
+            map.InsertLink('A', 'B', ConsoleColor.Red);
+            map.InsertLink('A', 'C', ConsoleColor.Blue);
         }
 
         public void TestSPT(SubwayMap<char> map)
