@@ -122,12 +122,12 @@ namespace SubwayMap
                     Vertecies[toPos].Edges.RemoveAt(edgePos);
 
                     //Display message
-                    MessageDisplay("\nJust Deleted the link between " + FromVertex.Name + " and " + ToVertex.Name + "\n", ConsoleColor.Green);
+                    MessageDisplay("\nJust Deleted the link between " + FromVertex.ToString() + " and " + ToVertex.ToString() + "\n", ConsoleColor.Green);
                 }
                 else
                 {
                     //Display message
-                    MessageDisplay("\nThe link between " + Vertecies[fromPos].Name + " and " + Vertecies[toPos].Name + " with color " + color + " doesn't exist\n", ConsoleColor.Red);
+                    MessageDisplay("\nThe link between " + Vertecies[fromPos].ToString() + " and " + Vertecies[toPos].ToString() + " with color " + color + " doesn't exist\n", ConsoleColor.Red);
                     Wait();
                 }
             }
@@ -277,7 +277,7 @@ namespace SubwayMap
             {
                 if (ArticulationPoints.Contains(Vertecies[i]))
                 {
-                    MessageDisplay(Vertecies[i].Name + " Is an articulation point", ConsoleColor.Yellow);
+                    MessageDisplay(Vertecies[i].ToString() + " Is an articulation point", ConsoleColor.Yellow);
                 }
             }
         }
@@ -395,7 +395,7 @@ namespace SubwayMap
                 }
                 else
                 {
-                    MessageDisplay("Station " + Vertecies[i].Name + " doesn't have any edges", ConsoleColor.Yellow);
+                    MessageDisplay("Station " + Vertecies[i].ToString() + " doesn't have any edges", ConsoleColor.Yellow);
                 }
             }
             Wait();
@@ -480,11 +480,11 @@ namespace SubwayMap
         /// <param name="toPos">the position of the edge in the edges list</param>
         private void PrintLink(Vertex<T> From, int toPos)
         {
-            Console.Write("[ {0} ]", From.Name);
+            Console.Write("{0}", From.ToString());
             Console.ForegroundColor = From.Edges[toPos].Colour;
             Console.Write("---->");
             Console.ResetColor();
-            Console.WriteLine("[ {0} ]", From.Edges[toPos].AdjStation.Name);
+            Console.WriteLine("{0}", From.Edges[toPos].AdjStation.ToString());
         }
         #endregion
 

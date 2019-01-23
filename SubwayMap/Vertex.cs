@@ -73,5 +73,10 @@ namespace SubwayMap
         /// <returns> { false } if it doesn't have any edges </returns>
         public bool HasEdges() => Edges.Count > 0;
 
+        public override string ToString()
+        {
+            return "[ " + Name + " ]";
+        }
+
     }
 }
