@@ -8,6 +8,7 @@ namespace SubwayMap
     {
         #region Variables
         private List<Vertex<T>> Vertecies;
+
         //Used to track the time of dicovery for the critical points
         private int time = 0;
         #endregion
@@ -59,7 +60,7 @@ namespace SubwayMap
         /// <param name="color">The line color</param>
         public void InsertLink(T from, T to, ConsoleColor color)
         {
-            //For the positions
+            //For the positions of the vertecies
             int fromPos, toPos;
 
             //Check if the stations dont exits
@@ -315,22 +316,29 @@ namespace SubwayMap
                     //Set the parent of the adjecent vertex
                     AdjVertex.Parent = CurrentVertex;
 
-                    //Run the Explore the adj vertex
+                    //Run and Explore the adj vertex
                     CriticalPoints(AdjVertex, ArticulationPoints);
 
-                    // Check if the subtree rooted with AdjVertex has a connection to 
+                    // Check if there is a backedge from the adjacent vertex to something before 
                     CurrentVertex.LowLink = Math.Min(CurrentVertex.LowLink, AdjVertex.LowLink);
 
-                    // u is an articulation point in following cases 
+                    /*
+                            ===To be an articulation point there are two cases.===
+                            1. The vertex is the root
+                                [ ] The vertex has no parent 
+                                [ ] has more than 1 child
+                            2. The vertex is not the root 
+                                [ ] The vertex has a parent
+                                [ ] The low link of the child is more than the discovery of itself
+                     */
 
-                    // (1) u is root of DFS tree and has two or more chilren. 
+                    //The vertex is root 
                     if (CurrentVertex.Parent == null && children > 1)
                     {
                         ArticulationPoints.Add(CurrentVertex);
                     }
 
-                    // (2) If u is not root and low value of one of its child 
-                    // is more than discovery value of u.  
+                    //The vertex is not root
                     if (CurrentVertex.Parent != null && AdjVertex.LowLink >= CurrentVertex.Discovered)
                     {
                         ArticulationPoints.Add(CurrentVertex);
