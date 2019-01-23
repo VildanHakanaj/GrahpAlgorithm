@@ -345,6 +345,7 @@ namespace SubwayMap
         }
 
         public void Test2(SubwayMap<char> map)
+
         {
             map.InsertStation('A');
             map.InsertStation('B');
@@ -360,6 +361,7 @@ namespace SubwayMap
             Console.WriteLine("\nThe graph is populated with Test 2 sample\n\n");
             map.PrintGraph();
         }
+
         public void Test3(SubwayMap<char> map)
         {
             map.InsertStation('A');
