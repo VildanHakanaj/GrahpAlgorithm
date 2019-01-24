@@ -103,6 +103,7 @@ namespace SubwayMap
                     break;
                 case "Find the articulation points":
                     map.CriticalPoints();
+                    Wait();
                     break;
                 case "Test1":
                     Test1(map);
@@ -193,6 +194,7 @@ namespace SubwayMap
                 if (error)
                 {
                     error = false;
+                    
                     ChangeColor(ConsoleColor.Red);
                     Console.WriteLine("Please make sure to enter a character for from and to and a string for color");
                     Wait();
@@ -247,15 +249,13 @@ namespace SubwayMap
                 else
                 {
                     error = true;
-                    ChangeColor(ConsoleColor.Red);
-                    Console.WriteLine("Invalid input please enter a character");
+                    MessageDisplay("Invalid input please enter a character", ConsoleColor.Red);
                 }
             }
             else
             {
-                ChangeColor(ConsoleColor.Red);
                 error = true;
-                Console.WriteLine("Invalid input please enter a character");
+                MessageDisplay("Invalid input please enter a character", ConsoleColor.Red);
             }
         }
 
@@ -307,11 +307,18 @@ namespace SubwayMap
         #endregion
 
         #region HelperMethods
+        private void MessageDisplay(string message, ConsoleColor color)
+        {
+            Console.ForegroundColor = color;
+            Console.WriteLine(message);
+            Console.ResetColor();
+        }
 
         private void ChangeColor(ConsoleColor color)
         {
             Console.ForegroundColor = color;
         }
+
         private void Wait()
         {
             Console.WriteLine("Press enter to continue...");

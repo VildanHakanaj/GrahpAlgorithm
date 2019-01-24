@@ -266,19 +266,22 @@ namespace SubwayMap
                     CriticalPoints(Vertecies[i], ArticulationPoints);
                 }
 
-            // Now ap[] contains articulation points, print them 
+            // Now articulationpoints list contains all articulation points, print them 
             Console.WriteLine();
             if (ArticulationPoints.Count == 0)
             {
+                //There is no articulation points
                 MessageDisplay("There is not articulation point in this graph", ConsoleColor.Red);
-                Wait();
             }
-
-            for (int i = 0; i < size; i++)
+            else
             {
-                if (ArticulationPoints.Contains(Vertecies[i]))
+                //Print all the articulation points
+                for (int i = 0; i < size; i++)
                 {
-                    MessageDisplay(Vertecies[i].ToString() + " Is an articulation point", ConsoleColor.Yellow);
+                    if (ArticulationPoints.Contains(Vertecies[i]))
+                    {
+                        MessageDisplay(Vertecies[i].ToString() + " Is an articulation point", ConsoleColor.Yellow);
+                    }
                 }
             }
         }
@@ -480,7 +483,7 @@ namespace SubwayMap
                 PrintSPT(station.Parent, names);
             }
         }
-        
+
         /// <summary>
         /// Helper method to print out the link between two stations
         /// </summary>
