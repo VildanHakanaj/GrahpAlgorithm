@@ -3,6 +3,25 @@ using System;
 
 namespace SubwayMap
 {
+
+
+
+
+
+    /*
+     * 
+     * TODO ::
+     * [ ] Make a print link in here
+     * [ ] Make the vertex print the color of the links based on the edges
+     * [ ] Get the edges vertex 
+     * 
+     */
+
+
+
+
+
+
     class Vertex<T>
     {
          //The name of the vertex

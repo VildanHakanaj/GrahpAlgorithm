@@ -214,7 +214,7 @@ namespace SubwayMap
 
                 //Get the second station
                 Console.Write("\nEnd a end station to : ");
-                if (char.TryParse(Console.ReadLine(), out to))
+                if (!char.TryParse(Console.ReadLine(), out to))
                 {
                     error = true;
                 }
