@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Edge.cs" />
+    <Compile Include="Helper.cs" />
     <Compile Include="IMenu.cs" />
     <Compile Include="IOptions.cs" />
     <Compile Include="ISubwayMap.cs" />

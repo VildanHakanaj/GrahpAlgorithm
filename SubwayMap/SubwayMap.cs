@@ -34,16 +34,14 @@ namespace SubwayMap
             //Check if the vertex doesnt already exists
             if (FindVertex(name) == -1)
             {
-                //Add the station
                 Vertecies.Add(new Vertex<T>(name));
-
-                //Print a message letting the user know it was successfull
-                MessageDisplay("Just inserted station [ " + name + " ] into the graph\n", ConsoleColor.Green);
+                //Print message
+                Helper.MessageDisplay("Just inserted station [ " + name + " ] into the graph\n", ConsoleColor.Green);
             }
             else
             {
-                //Print out the error
-                MessageDisplay("Station " + name + " already exists\n", ConsoleColor.Red);
+                //Print out the error 
+                Helper.MessageDisplay("Station " + name + " already exists\n", ConsoleColor.Red);
             }
         }
 
@@ -76,12 +74,12 @@ namespace SubwayMap
                 else
                 {
                     //Print message
-                    MessageDisplay("The link with color " + color + " from " + from + " to " + to + " already exists\n", ConsoleColor.Red);
+                    Helper.MessageDisplay("The link with color " + color + " from " + from + " to " + to + " already exists\n", ConsoleColor.Red);
                 }
             }
             else
             {
-                MessageDisplay("One of the station doesn't exits", ConsoleColor.Red);
+                Helper.MessageDisplay("One of the station doesn't exits", ConsoleColor.Red);
             }
         }
 
@@ -123,20 +121,20 @@ namespace SubwayMap
                     Vertecies[toPos].Edges.RemoveAt(edgePos);
 
                     //Display message
-                    MessageDisplay("\nJust Deleted the link between " + FromVertex.ToString() + " and " + ToVertex.ToString() + "\n", ConsoleColor.Green);
+                    Helper.MessageDisplay("\nJust Deleted the link between " + FromVertex.ToString() + " and " + ToVertex.ToString() + "\n", ConsoleColor.Green);
                 }
                 else
                 {
                     //Display message
-                    MessageDisplay("\nThe link between " + Vertecies[fromPos].ToString() + " and " + Vertecies[toPos].ToString() + " with color " + color + " doesn't exist\n", ConsoleColor.Red);
-                    Wait();
+                    Helper.MessageDisplay("\nThe link between " + Vertecies[fromPos].ToString() + " and " + Vertecies[toPos].ToString() + " with color " + color + " doesn't exist\n", ConsoleColor.Red);
+                    Helper.Wait();
                 }
             }
             else
             {
                 //Display message
-                MessageDisplay("\nOne of the station inputed doesn't exists\n", ConsoleColor.Red);
-                Wait();
+                Helper.MessageDisplay("\nOne of the station inputed doesn't exists\n", ConsoleColor.Red);
+                Helper.Wait();
             }
         }
         #endregion
@@ -231,7 +229,7 @@ namespace SubwayMap
             }
             else
             {
-                MessageDisplay("One of the stations doesn't exists\n", ConsoleColor.Red);
+                Helper.MessageDisplay("One of the stations doesn't exists\n", ConsoleColor.Red);
                 return null;
             }
 
@@ -240,10 +238,13 @@ namespace SubwayMap
         #endregion
 
         #region Articulation points
+
         /// <summary>
+        /// 
         /// CriticalPoints 
         /// Sets all the vertecies like unvisited 
         /// Creates the articulation poin list
+        /// 
         /// </summary>
         public void CriticalPoints()
         {
@@ -261,17 +262,19 @@ namespace SubwayMap
             //Call the recursive helper function to find articulation
             // points in DFS tree rooted with vertex 'i'
             for (int i = 0; i < size; i++)
+            {
                 if (Vertecies[i].Visited == false)
                 {
                     CriticalPoints(Vertecies[i], ArticulationPoints);
                 }
+            }
 
             // Now articulationpoints list contains all articulation points, print them 
             Console.WriteLine();
             if (ArticulationPoints.Count == 0)
             {
                 //There is no articulation points
-                MessageDisplay("There is not articulation point in this graph", ConsoleColor.Red);
+                Helper.MessageDisplay("There is not articulation point in this graph", ConsoleColor.Red);
             }
             else
             {
@@ -280,19 +283,21 @@ namespace SubwayMap
                 {
                     if (ArticulationPoints.Contains(Vertecies[i]))
                     {
-                        MessageDisplay(Vertecies[i].ToString() + " Is an articulation point", ConsoleColor.Yellow);
+                        Helper.MessageDisplay(Vertecies[i].ToString() + " Is an articulation point", ConsoleColor.Yellow);
                     }
                 }
             }
         }
 
         /// <summary>
+        /// 
         /// CriticalPoints
         /// Will go and run DFS on the graph and find
         /// all the articulation points
         /// 
         /// In this method i have utilized the articulation point algorithm 
         /// which will find the critical points of this graphs
+        /// 
         /// </summary>
         /// <param name="CurrentVertex">The vertex we are currently on</param>
         /// <param name="ArticulationPoints">The list of articulation points</param>
@@ -381,7 +386,7 @@ namespace SubwayMap
             return -1;
         }
 
-
+        #region Printing Methods
         /// <summary>
         /// Print Graph 
         /// 
@@ -406,30 +411,13 @@ namespace SubwayMap
                 }
                 else
                 {
-                    MessageDisplay("Station " + Vertecies[i].ToString() + " doesn't have any edges", ConsoleColor.Yellow);
+                    Helper.MessageDisplay("Station " + Vertecies[i].ToString() + " doesn't have any edges", ConsoleColor.Yellow);
                 }
             }
-            Wait();
+            Helper.Wait();
 
         }
 
-        /// <summary>
-        /// Message Display
-        /// 
-        /// Will display the message
-        /// given with the color
-        /// 
-        /// </summary>
-        /// <param name="message">The message to be displayed</param>
-        /// <param name="color">The color we want the message to be</param>
-        private void MessageDisplay(string message, ConsoleColor color)
-        {
-            Console.ForegroundColor = color;
-            Console.WriteLine(message);
-            Console.ResetColor();
-        }
-
-        #region Printing Methods
 
         /// <summary>
         /// Is going to be used to print the vertex parents 
@@ -445,25 +433,26 @@ namespace SubwayMap
             //Call the recursive method passing the station name
             if (station != null)
             {
+                //Recusive call the print statement to get the names from the vertex all the way to the parent
                 PrintSPT(station, names);
 
                 //Reverse the order of the stations
                 names.Reverse();
 
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.WriteLine("\nThe shortest path from station [ {0} ] to station [ {1} ] is: \n", names[0], names[names.Count - 1]);
-                Console.ResetColor();
+                Helper.MessageDisplay("\nThe shortest path from station [ " + names[0] + "] to station [ " + names[names.Count -1] + " ] is: \n", ConsoleColor.Blue);
 
+                //Print the names
                 for (int i = 0; i < names.Count; i++)
                 {
                     Console.Write("[{0}]-->", names.ElementAt(i));
                 }
-                Wait();
+                Console.WriteLine();
+                Helper.Wait();
             }
             else
             {
-                MessageDisplay("No path was found", ConsoleColor.Red);
-
+                Helper.MessageDisplay("No path was found", ConsoleColor.Red);
+                Helper.Wait();
             }
         }
 
@@ -498,17 +487,6 @@ namespace SubwayMap
             Console.WriteLine("{0}", From.Edges[toPos].AdjStation.ToString());
         }
         #endregion
-
-
-        /// <summary>
-        /// Helper function to make the user wait and press any key to continue
-        /// </summary>
-        private void Wait()
-        {
-            Console.WriteLine("Press any key to continue...");
-            Console.ReadKey();
-            Console.Clear();
-        }
 
         #endregion
     }

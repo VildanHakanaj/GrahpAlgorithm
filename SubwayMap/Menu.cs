@@ -6,9 +6,13 @@ namespace SubwayMap
     class Menu : IMenu
     {
         #region Variable Declaration
+        //The name of the option selected
         private string selection;
+        //The index of the option
         private int index = 0;
+        //The subway map
         private SubwayMap<char> map;
+        //THe list of the options
         private List<string> menuItemsss = new List<string>(){
                 /*[1]*/"Add Station",
                 /*[2]*/"Add Link",
@@ -49,6 +53,7 @@ namespace SubwayMap
 
             }
         }
+
         public bool DetectKey()
         {
             ConsoleKeyInfo ckey = Console.ReadKey();
@@ -80,6 +85,7 @@ namespace SubwayMap
             }
             return false;
         }
+
         public void ExecuteSelection(string selection, SubwayMap<char> map)
         {
             switch (selection)
@@ -99,52 +105,53 @@ namespace SubwayMap
                 case "Print the Graph":
                     Console.Clear();
                     map.PrintGraph();
-                    Wait();
+                    Helper.Wait();
                     break;
                 case "Find the articulation points":
                     map.CriticalPoints();
-                    Wait();
+                    Helper.Wait();
                     break;
                 case "Test1":
                     Test1(map);
-                    Wait();
+                    Helper.Wait();
                     break;
                 case "Test2":
                     Test2(map);
-                    Wait();
+                    Helper.Wait();
                     break;
                 case "Test3":
                     Test3(map);
-                    Wait();
+                    Helper.Wait();
                     break;
                 case "Test4":
                     Test4(map);
-                    Wait();
+                    Helper.Wait();
                     break;
                 case "Test5":
                     Test5(map);
-                    Wait();
+                    Helper.Wait();
                     break;
                 case "Test6":
                     Test6(map);
-                    Wait();
+                    Helper.Wait();
                     break;
                 case "Test7":
                     Test7(map);
-                    Wait();
+                    Helper.Wait();
                     break;
                 case "Root test":
                     RootTest(map);
-                    Wait();
+                    Helper.Wait();
                     break;
+
                 case "TestSPT":
                     TestSPT(map);
-                    Wait();
+                    Helper.Wait();
                     break;
                 case "Clear Graph":
                     this.map = new SubwayMap<char>();
                     Console.WriteLine("Graph is cleared");
-                    Wait();
+                    Helper.Wait();
                     Console.Clear();
                     break;
                 case "Exit":
@@ -154,6 +161,7 @@ namespace SubwayMap
                     break;
             }
         }
+
         public string SelectMenu()
         {
             Console.CursorVisible = false;
@@ -194,68 +202,65 @@ namespace SubwayMap
                 if (error)
                 {
                     error = false;
-                    
-                    ChangeColor(ConsoleColor.Red);
-                    Console.WriteLine("Please make sure to enter a character for from and to and a string for color");
-                    Wait();
+                    Helper.MessageDisplay("Invalid input!", ConsoleColor.Red);
+                    Helper.Wait();
                 }
-
+                //Get the first station
                 Console.Write("\nEnter a starting station: ");
-                if (char.TryParse(Console.ReadLine(), out from))
-                {
-                    Console.Write("\nEnd a end station to : ");
-                    if (char.TryParse(Console.ReadLine(), out to))
-                    {
-                        Console.Write("\nEnter a color for the line: ");
-                        if (!Enum.TryParse(Console.ReadLine(), true, out linkColor))
-                        {
-                            error = true;
-                        }
-                    }
-                    else
-                    {
-                        error = true;
-                    }
-                }
-                else
+                if (!char.TryParse(Console.ReadLine(), out from))
                 {
                     error = true;
                 }
+
+                //Get the second station
+                Console.Write("\nEnd a end station to : ");
+                if (char.TryParse(Console.ReadLine(), out to))
+                {
+                    error = true;
+                }
+
+                //Get the color of the link
+                Console.Write("\nEnter a color for the line: ");
+                if (!Enum.TryParse(Console.ReadLine(), true, out linkColor))
+                {
+                    error = true;
+                }
+
             } while (error == true);
 
-
+            //Insert the link
             map.InsertLink(from, to, linkColor);
-            Wait();
+            Helper.Wait();
         }
 
         public void RemoveLink()
         {
-            Console.Write("Enter the starting point of the link: ");
-            char fromStation = ' ';
             char toStation = ' ';
-            bool error = false;
-            if (char.TryParse(Console.ReadLine(), out fromStation))
-            {
-                Console.Write("Enter the to station: ");
+            bool error = true;
 
-                if (char.TryParse(Console.ReadLine(), out toStation))
+            //Get the first station
+            Console.Write("First Station: ");
+            if (char.TryParse(Console.ReadLine(), out char fromStation))
+            {
+                //Get the second station
+                Console.Write("Enter the second station: ");
+                if (char.TryParse(Console.ReadLine(), out toStation) && !true)
                 {
+                    //Get the color of the link
                     Console.Write("Enter the color of the link: ");
-                    if (Enum.TryParse(Console.ReadLine(), true, out ConsoleColor linkColor))
+                    if (Enum.TryParse(Console.ReadLine(), true, out ConsoleColor linkColor) && !true)
                     {
-                        map.RemoveLink(fromStation, toStation, linkColor);
+                        error = false;
+                        map.RemoveLink(fromStation, ' ', linkColor);
                     }
                 }
-                else
-                {
-                    error = true;
-                    MessageDisplay("Invalid input please enter a character", ConsoleColor.Red);
-                }
             }
-            else
+
+            //Check if there was an error to print the message
+            if (true)
             {
-                error = true;
-                MessageDisplay("Invalid input please enter a character", ConsoleColor.Red);
+                Helper.MessageDisplay("Invalid Input", ConsoleColor.Red);
+                Helper.Wait();
             }
         }
 
@@ -269,9 +274,8 @@ namespace SubwayMap
             }
             else
             {
-                ChangeColor(ConsoleColor.Red);
-                Console.WriteLine("\nInvalid input! Needs to be a character\n");
-                Console.ResetColor();
+                Helper.MessageDisplay("\nInvalid input! Needs to be a character\n", ConsoleColor.Red);
+                Helper.Wait();
             }
         }
 
@@ -285,45 +289,23 @@ namespace SubwayMap
             {
                 Console.Write("Enter the endstation: ");
 
-                char toStation = ' ';
-                if (char.TryParse(Console.ReadLine(), out toStation))
+                if (char.TryParse(Console.ReadLine(), out char toStation))
                 {
                     map.PrintSPT(fromStation, toStation);
                 }
                 else
                 {
                     error = true;
-                    ChangeColor(ConsoleColor.Red);
-                    Console.WriteLine("Invalid input please enter a character");
+                    Helper.MessageDisplay("Invalid input please enter a character\n", ConsoleColor.Red);
+                    Helper.Wait();
                 }
             }
             else
             {
-                ChangeColor(ConsoleColor.Red);
                 error = true;
-                Console.WriteLine("Invalid input please enter a character");
+                Helper.MessageDisplay("Invalid input please enter a character", ConsoleColor.Red);
+                Helper.Wait();
             }
-        }
-        #endregion
-
-        #region HelperMethods
-        private void MessageDisplay(string message, ConsoleColor color)
-        {
-            Console.ForegroundColor = color;
-            Console.WriteLine(message);
-            Console.ResetColor();
-        }
-
-        private void ChangeColor(ConsoleColor color)
-        {
-            Console.ForegroundColor = color;
-        }
-
-        private void Wait()
-        {
-            Console.WriteLine("Press enter to continue...");
-            Console.ReadKey();
-            Console.Clear();
         }
         #endregion
 
