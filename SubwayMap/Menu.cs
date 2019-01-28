@@ -100,15 +100,19 @@ namespace SubwayMap
             {
                 case "Add Station":
                     AddStation();
+                    Helper.Wait();
                     break;
                 case "Add Link":
                     AddLink();
+                    Helper.Wait();
                     break;
                 case "Remove Link":
                     RemoveLink();
+                    Helper.Wait();
                     break;
                 case "Find shortest path between two stations":
                     ShortestPath();
+                    Helper.Wait();
                     break;
                 case "Print the Graph":
                     Console.Clear();
@@ -140,6 +144,7 @@ namespace SubwayMap
                     Environment.Exit(1);
                     break;
                 default:
+                    Environment.Exit(1);
                     break;
             }
         }
@@ -210,11 +215,9 @@ namespace SubwayMap
 
             //Insert the link
             map.InsertLink(from, to, linkColor);
-            Helper.Wait();
         }
         public void RemoveLink()
         {
-            char toStation = ' ';
             bool error = true;
 
             //Get the first station
@@ -223,23 +226,22 @@ namespace SubwayMap
             {
                 //Get the second station
                 Console.Write("Enter the second station: ");
-                if (char.TryParse(Console.ReadLine(), out toStation) && !true)
+                if (char.TryParse(Console.ReadLine(), out char toStation))
                 {
                     //Get the color of the link
                     Console.Write("Enter the color of the link: ");
-                    if (Enum.TryParse(Console.ReadLine(), true, out ConsoleColor linkColor) && !true)
+                    if (Enum.TryParse(Console.ReadLine(), true, out ConsoleColor linkColor))
                     {
                         error = false;
-                        map.RemoveLink(fromStation, ' ', linkColor);
+                        map.RemoveLink(fromStation, toStation, linkColor);
                     }
                 }
             }
 
             //Check if there was an error to print the message
-            if (true)
+            if (error)
             {
                 Helper.MessageDisplay("Invalid Input", ConsoleColor.Red);
-                Helper.Wait();
             }
         }
         public void AddStation()
@@ -253,7 +255,6 @@ namespace SubwayMap
             else
             {
                 Helper.MessageDisplay("\nInvalid input! Needs to be a character\n", ConsoleColor.Red);
-                Helper.Wait();
             }
         }
         public void ShortestPath()
@@ -274,14 +275,12 @@ namespace SubwayMap
                 {
                     error = true;
                     Helper.MessageDisplay("Invalid input please enter a character\n", ConsoleColor.Red);
-                    Helper.Wait();
                 }
             }
             else
             {
                 error = true;
                 Helper.MessageDisplay("Invalid input please enter a character", ConsoleColor.Red);
-                Helper.Wait();
             }
         }
         #endregion

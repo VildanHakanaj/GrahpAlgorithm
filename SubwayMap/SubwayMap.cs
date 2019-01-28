@@ -143,14 +143,12 @@ namespace SubwayMap
                 {
                     //Display message
                     Helper.MessageDisplay("\nThe link between " + Vertecies[fromPos].ToString() + " and " + Vertecies[toPos].ToString() + " with color " + color + " doesn't exist\n", ConsoleColor.Red);
-                    Helper.Wait();
                 }
             }
             else
             {
                 //Display message
                 Helper.MessageDisplay("\nOne of the station inputed doesn't exists\n", ConsoleColor.Red);
-                Helper.Wait();
             }
         }
         #endregion
@@ -256,9 +254,8 @@ namespace SubwayMap
         #region Articulation points
         /// <summary>
         /// 
-        /// CriticalPoints 
-        /// Sets all the vertecies like unvisited 
-        /// Creates the articulation poin list
+        /// Critical point will start the articulation point
+        /// algorithm.
         /// 
         /// </summary>
         public void CriticalPoints()
@@ -307,11 +304,8 @@ namespace SubwayMap
         /// <summary>
         /// 
         /// CriticalPoints
-        /// Will go and run DFS on the graph and find
-        /// all the articulation points
         /// 
-        /// In this method i have utilized the articulation point algorithm 
-        /// which will find the critical points of this graphs
+        /// Runs DFS search on the graph and determines which of the points is a Articulatio point
         /// 
         /// </summary>
         /// <param name="CurrentVertex">The vertex we are currently on</param>
@@ -407,7 +401,7 @@ namespace SubwayMap
         /// 
         /// This method will simply
         /// print the vertecies with its 
-        /// edges and connections
+        /// edges and color
         /// From vertex to vertex and the color of the link
         /// 
         /// E.x
@@ -455,18 +449,18 @@ namespace SubwayMap
                     station = station.Parent;
                 }
                 Console.WriteLine();
-                Helper.Wait();
             }
             else
             {
                 //Error message display
                 Helper.MessageDisplay("No path was found", ConsoleColor.Red);
-                Helper.Wait();
             }
         }
 
         /// <summary>
+        /// 
         /// Helper method to print out the link between two stations
+        /// 
         /// </summary>
         /// <param name="From">The station to start from</param>
         /// <param name="toPos">the position of the edge in the edges list</param>
