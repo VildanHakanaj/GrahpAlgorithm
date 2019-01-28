@@ -455,13 +455,11 @@ namespace SubwayMap
                     station = station.Parent;
                 }
                 Console.WriteLine();
-                Helper.Wait();
             }
             else
             {
                 //Error message display
                 Helper.MessageDisplay("No path was found", ConsoleColor.Red);
-                Helper.Wait();
             }
         }
 
