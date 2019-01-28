@@ -33,7 +33,7 @@ namespace SubwayMap
         {
             Vertecies = new List<Vertex<T>>();
         }
-        
+
         #region Main Methods for subway
 
         /// <summary>
@@ -154,7 +154,7 @@ namespace SubwayMap
             }
         }
         #endregion
-        
+
         #region ShortestPath
 
         /// <summary>
@@ -376,9 +376,9 @@ namespace SubwayMap
         }
 
         #endregion
-        
+
         #region HelperMethods
-        
+
         /// <summary>
         /// Find Vertex
         /// 
@@ -441,50 +441,24 @@ namespace SubwayMap
         {
             Vertex<T> station = ShortestPath(from, to);
 
-            //Create a list for the to be stored
-            List<T> names = new List<T>();
-            //Call the recursive method passing the station name
+            //Check if there was any paths
             if (station != null)
             {
-                //Recusive call the print statement to get the names from the vertex all the way to the parent
-                PrintSPT(station, names);
-
-                //Reverse the order of the stations
-                names.Reverse();
-
-                Helper.MessageDisplay("\nThe shortest path from station [ " + names[0] + "] to station [ " + names[names.Count -1] + " ] is: \n", ConsoleColor.Blue);
-
-                //Print the names
-                for (int i = 0; i < names.Count; i++)
+                Helper.MessageDisplay("\nThe shortest path from station [ " + from + " ] to station [ " + to + " ] is: \n", ConsoleColor.Blue);
+                //Print the path
+                while (station.Parent != null)
                 {
-                    Console.Write("[{0}]-->", names.ElementAt(i));
+                    Console.Write(station.ToString() + "-->");
+                    station = station.Parent;
                 }
                 Console.WriteLine();
                 Helper.Wait();
             }
             else
             {
+                //Error message display
                 Helper.MessageDisplay("No path was found", ConsoleColor.Red);
                 Helper.Wait();
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// Using recursion to backtrack the 
-        /// path from the end point to the 
-        /// start point
-        /// 
-        /// </summary>
-        /// <param name="station"></param>
-        /// <param name="names"></param>
-        private void PrintSPT(Vertex<T> station, List<T> names)
-        {
-            names.Add(station.Name);
-
-            if (station.Parent != null)
-            {
-                PrintSPT(station.Parent, names);
             }
         }
 
