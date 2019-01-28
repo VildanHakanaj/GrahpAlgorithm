@@ -433,9 +433,12 @@ namespace SubwayMap
 
 
         /// <summary>
-        /// Is going to be used to print the vertex parents 
+        /// PrintSPT
+        /// 
+        /// Prints the shortes path out
+        /// 
         /// </summary>
-        /// <param name="station"></param>
+        /// <param name="station">The end station</param>
 
         public void PrintSPT(T from, T to)
         {
