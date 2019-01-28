@@ -144,6 +144,7 @@ namespace SubwayMap
                     Environment.Exit(1);
                     break;
                 default:
+                    Environment.Exit(1);
                     break;
             }
         }
@@ -238,7 +239,7 @@ namespace SubwayMap
             }
 
             //Check if there was an error to print the message
-            if (true)
+            if (error)
             {
                 Helper.MessageDisplay("Invalid Input", ConsoleColor.Red);
             }

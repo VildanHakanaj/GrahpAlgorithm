@@ -143,14 +143,12 @@ namespace SubwayMap
                 {
                     //Display message
                     Helper.MessageDisplay("\nThe link between " + Vertecies[fromPos].ToString() + " and " + Vertecies[toPos].ToString() + " with color " + color + " doesn't exist\n", ConsoleColor.Red);
-                    Helper.Wait();
                 }
             }
             else
             {
                 //Display message
                 Helper.MessageDisplay("\nOne of the station inputed doesn't exists\n", ConsoleColor.Red);
-                Helper.Wait();
             }
         }
         #endregion
