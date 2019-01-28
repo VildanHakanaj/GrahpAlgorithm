@@ -443,30 +443,37 @@ namespace SubwayMap
             if (station != null)
             {
                 Helper.MessageDisplay("\nThe shortest path from station [ " + from + " ] to station [ " + to + " ] is: \n", ConsoleColor.Blue);
-                //Print the path;
+                //Reverse the path
                 while (station.Parent != null)
                 {
                     stack.Push(station);
                     station = station.Parent;
                 }
                 stack.Push(station);
+                //Print the path thats in the stack
                 while (stack.Count > 0 && !stack.Peek().Name.Equals(to))
                 {
+                    //To check if there is more than one line
                     int count = 0;
+
                     station = stack.Pop();
+                    //Looping through the edges of the vertex
                     for (int i = 0; i < station.Edges.Count; i++)
                     {
                         if (station.Edges[i].AdjStation.Name.Equals(stack.Peek().Name))
                         {
                             string msg = count > 0 ? "\nOr You can take line\n" : "\nTake line\n";
-
+                            
                             Helper.MessageDisplay(msg, ConsoleColor.White);
 
+                            //Print the link
                             PrintLink(station, i);
                             count++;
                         }
                     }
                 }
+
+                //When finished.
                 Helper.MessageDisplay("Arrived", ConsoleColor.Yellow);
             }
             else
