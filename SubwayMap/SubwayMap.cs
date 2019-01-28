@@ -449,13 +449,6 @@ namespace SubwayMap
                     stack.Push(station);
                     station = station.Parent;
                 }
-
-
-                /*
-                 *
-                 *FIND THE REASON WHY THE STACK IS GETTING EMPTY
-                 * 
-                 */
                 stack.Push(station);
                 while (stack.Count > 0 && !stack.Peek().Name.Equals(to))
                 {
