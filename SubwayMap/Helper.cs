@@ -1,8 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿/*======================================================================================================================
+|   A representation of a subway map using the Grahp algorithms
+|
+|   Name:           Helper --> Class
+|
+|   Written by:     Vildan Hakanaj - January 2019
+|
+|   Written for:    COIS 3020 (Prof. Brian Patrick) Assignment #1 Trent University Winter 2019.
+|
+|   Purpose:        This class holds methods that i use accross the project. 
+|                   
+|       
+======================================================================================================================*/
+
+using System;
 
 namespace SubwayMap
 {
@@ -10,7 +20,10 @@ namespace SubwayMap
     {
 
         /// <summary>
+        /// Wait
+        /// 
         /// Helper function to make the user wait and press any key to continue
+        /// 
         /// </summary>
         public static void Wait()
         {
@@ -21,13 +34,11 @@ namespace SubwayMap
 
         /// <summary>
         /// Message Display
-        /// 
-        /// Will display the message
-        /// given with the color
+        /// Helper Function to display the message with the color
         /// 
         /// </summary>
         /// <param name="message">The message to be displayed</param>
-        /// <param name="color">The color we want the message to be</param>
+        /// <param name="color">The color the message is going be</param>
         public static void MessageDisplay(string message, ConsoleColor color)
         {
             Console.ForegroundColor = color;

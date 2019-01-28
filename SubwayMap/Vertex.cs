@@ -1,26 +1,24 @@
-﻿using System.Collections.Generic;
+﻿/*======================================================================================================================
+|   A representation of a subway map using the Grahp algorithms
+|   For this project i have used the adjacency list graph
+|
+|   Name:           Vertex --> Class
+|
+|   Written by:     Vildan Hakanaj - January 2019
+|
+|   Written for:    COIS 3020 (Prof. Brian Patrick) Assignment #1 Trent University Winter 2019.
+|
+|   Purpose:        Represents the vertex ( stations ) of the subway map
+|
+|   Usage:          Used in the subwaymap
+|
+|
+======================================================================================================================*/
+using System.Collections.Generic;
 using System;
 
 namespace SubwayMap
 {
-
-
-
-
-
-    /*
-     * 
-     * TODO ::
-     * [ ] Make a print link in here
-     * [ ] Make the vertex print the color of the links based on the edges
-     * [ ] Get the edges vertex 
-     * 
-     */
-
-
-
-
-
 
     class Vertex<T>
     {

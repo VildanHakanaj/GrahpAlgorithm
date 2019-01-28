@@ -1,4 +1,20 @@
-﻿using System;
+﻿/*======================================================================================================================
+|   A representation of a subway map using the Grahp algorithms
+|   For this project i have used the adjacency list graph
+|
+|   Name:           Subwaymap --> Class
+|
+|   Written by:     Vildan Hakanaj - January 2019
+|
+|   Written for:    COIS 3020 (Prof. Brian Patrick) Assignment #1 Trent University Winter 2019.
+|
+|   Purpose:        To Represent the Subway map and the links between stations
+|
+|   Usage:          Used in the main program
+|
+|
+======================================================================================================================*/
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -17,7 +33,7 @@ namespace SubwayMap
         {
             Vertecies = new List<Vertex<T>>();
         }
-
+        
         #region Main Methods for subway
 
         /// <summary>
@@ -138,7 +154,7 @@ namespace SubwayMap
             }
         }
         #endregion
-
+        
         #region ShortestPath
 
         /// <summary>
@@ -238,7 +254,6 @@ namespace SubwayMap
         #endregion
 
         #region Articulation points
-
         /// <summary>
         /// 
         /// CriticalPoints 
@@ -361,9 +376,9 @@ namespace SubwayMap
         }
 
         #endregion
-
+        
         #region HelperMethods
-
+        
         /// <summary>
         /// Find Vertex
         /// 
@@ -414,8 +429,6 @@ namespace SubwayMap
                     Helper.MessageDisplay("Station " + Vertecies[i].ToString() + " doesn't have any edges", ConsoleColor.Yellow);
                 }
             }
-            Helper.Wait();
-
         }
 
 
@@ -457,9 +470,11 @@ namespace SubwayMap
         }
 
         /// <summary>
+        /// 
         /// Using recursion to backtrack the 
         /// path from the end point to the 
         /// start point
+        /// 
         /// </summary>
         /// <param name="station"></param>
         /// <param name="names"></param>
