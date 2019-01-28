@@ -301,6 +301,7 @@ namespace SubwayMap
             map.InsertStation('K');
 
             map.InsertLink('A', 'B', ConsoleColor.Red);
+            map.InsertLink('A', 'B', ConsoleColor.Yellow);
             map.InsertLink('A', 'C', ConsoleColor.Red);
             map.InsertLink('B', 'C', ConsoleColor.Red);
             map.InsertLink('B', 'D', ConsoleColor.Red);

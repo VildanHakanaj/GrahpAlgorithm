@@ -438,25 +438,43 @@ namespace SubwayMap
         {
             Vertex<T> station = ShortestPath(from, to);
             Stack<Vertex<T>> stack = new Stack<Vertex<T>>();
+            List<Edge<T>> edges;
             //Check if there was any paths
             if (station != null)
             {
                 Helper.MessageDisplay("\nThe shortest path from station [ " + from + " ] to station [ " + to + " ] is: \n", ConsoleColor.Blue);
-                //Print the path
+                //Print the path;
                 while (station.Parent != null)
                 {
                     stack.Push(station);
                     station = station.Parent;
                 }
 
-                stack.Push(station);
 
-                while (stack.Count > 0)
+                /*
+                 *
+                 *FIND THE REASON WHY THE STACK IS GETTING EMPTY
+                 * 
+                 */
+                stack.Push(station);
+                while (stack.Count > 0 && !stack.Peek().Name.Equals(to))
                 {
-                    Console.Write(stack.Pop().ToString() + "==>");
+                    int count = 0;
+                    station = stack.Pop();
+                    for (int i = 0; i < station.Edges.Count; i++)
+                    {
+                        if (station.Edges[i].AdjStation.Name.Equals(stack.Peek().Name))
+                        {
+                            string msg = count > 0 ? "\nOr You can take line\n" : "\nTake line\n";
+
+                            Helper.MessageDisplay(msg, ConsoleColor.White);
+
+                            PrintLink(station, i);
+                            count++;
+                        }
+                    }
                 }
-                
-                Console.WriteLine();
+                Helper.MessageDisplay("Arrived", ConsoleColor.Yellow);
             }
             else
             {

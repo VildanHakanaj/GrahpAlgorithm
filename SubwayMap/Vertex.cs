@@ -99,7 +99,7 @@ namespace SubwayMap
                 {
                     if (Edges[i].AdjStation.Name.Equals(to))
                     {
-                        edges.Add(edges[i]);
+                        edges.Add(Edges[i]);
                     }
                 }
                 return edges;
