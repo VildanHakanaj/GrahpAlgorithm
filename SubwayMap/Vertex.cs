@@ -90,6 +90,23 @@ namespace SubwayMap
         /// <returns> { false } if it doesn't have any edges </returns>
         public bool HasEdges() => Edges.Count > 0;
 
+        public List<Edge<T>> FindAllEdges(T to)
+        {
+            List<Edge<T>> edges = new List<Edge<T>>();
+            if (HasEdges())
+            {
+                for (int i = 0; i < Edges.Count; i++)
+                {
+                    if (Edges[i].AdjStation.Name.Equals(to))
+                    {
+                        edges.Add(edges[i]);
+                    }
+                }
+                return edges;
+            }
+            return null;
+        }
+
         public override string ToString()
         {
             return "[ " + Name + " ]";

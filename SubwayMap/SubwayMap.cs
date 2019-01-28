@@ -363,7 +363,7 @@ namespace SubwayMap
                 }
                 else if (AdjVertex != CurrentVertex.Parent)
                 {
-                    // Update low value of u for parent function calls. 
+                    // Update low value of current vertex for parent function calls. 
                     CurrentVertex.LowLink = Math.Min(CurrentVertex.LowLink, AdjVertex.Discovered);
                 }
             }
@@ -437,7 +437,7 @@ namespace SubwayMap
         public void PrintSPT(T from, T to)
         {
             Vertex<T> station = ShortestPath(from, to);
-
+            Stack<Vertex<T>> stack = new Stack<Vertex<T>>();
             //Check if there was any paths
             if (station != null)
             {
@@ -445,9 +445,17 @@ namespace SubwayMap
                 //Print the path
                 while (station.Parent != null)
                 {
-                    Console.Write(station.ToString() + "-->");
+                    stack.Push(station);
                     station = station.Parent;
                 }
+
+                stack.Push(station);
+
+                while (stack.Count > 0)
+                {
+                    Console.Write(stack.Pop().ToString() + "==>");
+                }
+                
                 Console.WriteLine();
             }
             else
