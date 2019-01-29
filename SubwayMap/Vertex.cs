@@ -90,6 +90,13 @@ namespace SubwayMap
         /// <returns> { false } if it doesn't have any edges </returns>
         public bool HasEdges() => Edges.Count > 0;
 
+
+        /// <summary>
+        /// Finds all the edges between this 
+        /// vertex and the to vertex 
+        /// </summary>
+        /// <param name="to">the vertex to look for</param>
+        /// <returns></returns>
         public List<Edge<T>> FindAllEdges(T to)
         {
             List<Edge<T>> edges = new List<Edge<T>>();
