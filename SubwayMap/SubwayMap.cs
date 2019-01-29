@@ -463,7 +463,7 @@ namespace SubwayMap
                         if (station.Edges[i].AdjStation.Name.Equals(stack.Peek().Name))
                         {
                             string msg = count > 0 ? "\nOr You can take line\n" : "\nTake line\n";
-                            
+
                             Helper.MessageDisplay(msg, ConsoleColor.White);
 
                             //Print the link

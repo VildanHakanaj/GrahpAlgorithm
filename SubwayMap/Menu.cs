@@ -50,6 +50,11 @@ namespace SubwayMap
         }
         
         #region MainMenuMethods
+        /// <summary>
+        /// ShowMenu
+        /// 
+        /// SHows the menu option to the console
+        /// </summary>
         public void ShowMenu()
         {
             while (true)
@@ -63,6 +68,13 @@ namespace SubwayMap
 
             }
         }
+
+        /// <summary>
+        /// DeteckKey
+        /// 
+        /// Detects what key the user has pressed
+        /// </summary>
+        /// <returns></returns>
         public bool DetectKey()
         {
             ConsoleKeyInfo ckey = Console.ReadKey();
@@ -94,6 +106,15 @@ namespace SubwayMap
             }
             return false;
         }
+
+        /// <summary>
+        /// ExecuteSelection
+        /// 
+        /// Executes the needed methods for the option
+        /// 
+        /// </summary>
+        /// <param name="selection">The option name</param>
+        /// <param name="map">The subway map</param>
         public void ExecuteSelection(string selection, SubwayMap<char> map)
         {
             switch (selection)
@@ -177,7 +198,14 @@ namespace SubwayMap
         #endregion
 
         #region Options
+        /// <summary>
+        /// AddLink
+        /// 
+        /// Runs the method to add linksl
+        /// </summary>
         public void AddLink()
+
+
         {
             char from = ' ', to = ' ';
             ConsoleColor linkColor = ConsoleColor.White;
@@ -216,6 +244,12 @@ namespace SubwayMap
             //Insert the link
             map.InsertLink(from, to, linkColor);
         }
+
+        /// <summary>
+        /// RemoveLink
+        /// 
+        /// Runs the method for removing links
+        /// </summary>
         public void RemoveLink()
         {
             bool error = true;
@@ -244,6 +278,13 @@ namespace SubwayMap
                 Helper.MessageDisplay("Invalid Input", ConsoleColor.Red);
             }
         }
+
+        /// <summary>
+        /// AddStation
+        /// 
+        /// Run the methods to add stations
+        /// 
+        /// </summary>
         public void AddStation()
         {
             Console.Write("Enter a name for the station ==> ");
@@ -257,6 +298,12 @@ namespace SubwayMap
                 Helper.MessageDisplay("\nInvalid input! Needs to be a character\n", ConsoleColor.Red);
             }
         }
+
+        /// <summary>
+        /// ShortestPath
+        /// 
+        /// Runs the shortest path algorithm 
+        /// </summary>
         public void ShortestPath()
         {
             Console.Write("Enter the the starting station: ");
@@ -286,6 +333,17 @@ namespace SubwayMap
         #endregion
 
         #region Testing Cases
+
+        /// <summary>
+        /// Test 1
+        /// 
+        /// In this test you would expect the following.
+        /// Articulation Point [ D, G ]
+        /// Shortest Path A to J
+        /// [ A, B, D, E, G, J ]
+        /// 
+        /// </summary>
+        /// <param name="map"></param>
         public void Test1(SubwayMap<char> map)
         {
             map.InsertStation('A');
@@ -330,6 +388,7 @@ namespace SubwayMap
             map.PrintGraph();
             Console.WriteLine("\n");
         }
+
         public void Test2(SubwayMap<char> map)
 
         {
