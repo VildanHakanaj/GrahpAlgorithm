@@ -298,29 +298,33 @@ namespace SubwayMap
             map.InsertStation('H');
             map.InsertStation('I');
             map.InsertStation('J');
-            map.InsertStation('K');
 
-            map.InsertLink('A', 'B', ConsoleColor.Yellow);
             map.InsertLink('A', 'B', ConsoleColor.Red);
+            map.InsertLink('A', 'B', ConsoleColor.Yellow);
+
             map.InsertLink('A', 'C', ConsoleColor.Yellow);
-            map.InsertLink('B', 'C', ConsoleColor.Red);
-            map.InsertLink('B', 'D', ConsoleColor.Red);
-            map.InsertLink('C', 'D', ConsoleColor.Green);
-            map.InsertLink('C', 'D', ConsoleColor.Yellow);
-            map.InsertLink('D', 'E', ConsoleColor.Blue);
-            map.InsertLink('D', 'F', ConsoleColor.Blue);
-            map.InsertLink('D', 'G', ConsoleColor.Blue);
-            map.InsertLink('E', 'F', ConsoleColor.Cyan);
-            map.InsertLink('E', 'G', ConsoleColor.Cyan);
-            map.InsertLink('E', 'H', ConsoleColor.Cyan);
-            map.InsertLink('E', 'H', ConsoleColor.Green);
+
+            map.InsertLink('B', 'D', ConsoleColor.Green);
+
+            map.InsertLink('C', 'D', ConsoleColor.Blue);
+
+            map.InsertLink('D', 'E', ConsoleColor.Cyan);
+            map.InsertLink('D', 'E', ConsoleColor.Green);
+
+            map.InsertLink('D', 'F', ConsoleColor.Gray);
+
+            map.InsertLink('E', 'G', ConsoleColor.Magenta);
+
             map.InsertLink('F', 'G', ConsoleColor.Magenta);
-            map.InsertLink('F', 'H', ConsoleColor.Magenta);
-            map.InsertLink('G', 'H', ConsoleColor.DarkCyan);
-            map.InsertLink('H', 'I', ConsoleColor.White);
-            map.InsertLink('H', 'I', ConsoleColor.DarkGray);
-            map.InsertLink('H', 'J', ConsoleColor.White);
-            map.InsertLink('H', 'K', ConsoleColor.White);
+            map.InsertLink('F', 'G', ConsoleColor.Blue);
+
+            map.InsertLink('G', 'H', ConsoleColor.Yellow);
+            map.InsertLink('G', 'H', ConsoleColor.Cyan);
+
+            map.InsertLink('G', 'I', ConsoleColor.Red);
+
+            map.InsertLink('G', 'J', ConsoleColor.Red);
+
 
             Console.WriteLine("\nThe graph is populated with Test 1 sample\n\n");
             map.PrintGraph();
@@ -333,12 +337,28 @@ namespace SubwayMap
             map.InsertStation('B');
             map.InsertStation('C');
             map.InsertStation('D');
+            map.InsertStation('E');
+            map.InsertStation('F');
+            map.InsertStation('G');
+            map.InsertStation('H');
 
             map.InsertLink('A', 'B', ConsoleColor.Red);
+            map.InsertLink('A', 'G', ConsoleColor.Yellow);
+            map.InsertLink('A', 'H', ConsoleColor.Blue);
 
             map.InsertLink('B', 'C', ConsoleColor.Red);
 
-            map.InsertLink('C', 'D', ConsoleColor.Red);
+            map.InsertLink('B', 'D', ConsoleColor.Yellow);
+            map.InsertLink('B', 'D', ConsoleColor.Green);
+
+            map.InsertLink('C', 'F', ConsoleColor.Red);
+
+            map.InsertLink('F', 'E', ConsoleColor.Red);
+            map.InsertLink('F', 'E', ConsoleColor.Yellow);
+
+            map.InsertLink('E', 'D', ConsoleColor.Yellow);
+            map.InsertLink('E', 'D', ConsoleColor.Green);
+
 
             Console.WriteLine("\nThe graph is populated with Test 2 sample\n\n");
             map.PrintGraph();
@@ -350,23 +370,17 @@ namespace SubwayMap
             map.InsertStation('C');
             map.InsertStation('D');
             map.InsertStation('E');
-            map.InsertStation('F');
-            map.InsertStation('G');
-            map.InsertStation('H');
-            map.InsertStation('I');
 
-            map.InsertLink('A', 'B', ConsoleColor.Yellow);
-            map.InsertLink('A', 'F', ConsoleColor.Yellow);
+            map.InsertLink('A', 'B', ConsoleColor.Red);
+            map.InsertLink('A', 'C', ConsoleColor.Yellow);
+
+            map.InsertLink('B', 'C', ConsoleColor.Red);
             map.InsertLink('B', 'C', ConsoleColor.Blue);
-            map.InsertLink('B', 'D', ConsoleColor.Blue);
-            map.InsertLink('C', 'D', ConsoleColor.Blue);
-            map.InsertLink('C', 'E', ConsoleColor.Green);
-            map.InsertLink('D', 'E', ConsoleColor.Green);
-            map.InsertLink('F', 'G', ConsoleColor.Green);
-            map.InsertLink('F', 'H', ConsoleColor.Magenta);
-            map.InsertLink('G', 'H', ConsoleColor.Magenta);
-            map.InsertLink('G', 'I', ConsoleColor.Magenta);
-            map.InsertLink('H', 'I', ConsoleColor.Cyan);
+            map.InsertLink('B', 'D', ConsoleColor.Yellow);
+
+            map.InsertLink('D', 'C', ConsoleColor.Green);
+
+
 
             Console.WriteLine("\nThe graph is populated with Test 3 sample\n\n");
             map.PrintGraph();
